@@ -6,7 +6,7 @@ node_js:
 - '12.13.0'
 install:
 # - travis_retry npm i -g yarn 
-- travis_retry npm run install 
+- travis_retry npm i
 # - travis_retry yarn 
 - npm run build
 - mkdir out
