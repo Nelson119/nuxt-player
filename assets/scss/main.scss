@@ -1,0 +1,282 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, input:focus {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+input, button, select, textarea {
+  outline: none
+}
+*:focus {
+  outline: none;
+}
+body {
+  line-height: 1;
+  font-family: "Microsoft JhengHei UI", Verdana, geneva, sans-serif, "Heiti TC", "黑體-繁", "微軟正黑體", "Microsoft JhengHei", "微軟雅黑體", "Microsoft YaHei", DFKai-SB;
+}
+.Container {
+  width: 100%;
+  height: auto;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  background: #40a2db;
+  min-height: 100vh;
+}
+.Player {
+  width: 100%;
+  max-width: 1100px;
+  min-height: 500px;
+}
+.Player .Upper {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+}
+.Player .Lower {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+}
+.Player .Flex1 {
+  -webkit-flex: 1;
+  flex: 1;
+}
+.Player .Flex2 {
+  -webkit-flex: 2;
+  flex: 2;
+  background-color: #40a2db;
+  border: solid 1px #5cb8ee;
+}
+.Player .Dropdown {
+  width: 100%;
+}
+.VDOGrid {
+	width: 100%;
+	background-color: #151515;
+	float: left;
+}
+.VDOGrid .VDO {
+	width: 100%;
+	position: relative;
+  float: left;
+  overflow: hidden;
+}
+.VDOGrid .VDO50 {
+	width: 50%;
+}
+.VDOGrid .VDO33 {
+	width: 33.33%;
+}
+.VDOGrid .VDO25 {
+	width: 25%;
+}
+.VDOGrid .VDO .Title {
+	width: 100%;
+	position: absolute;
+	padding: 10px;
+	color: #fff;
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+	z-index: 99;
+}
+.VDOGrid .VDO .Info {
+	width: 100%;
+	position: absolute;
+	padding: 10px;
+	color: #fff;
+	left: 0;
+	bottom: 0;
+	z-index: 99;
+}
+.VDOGrid .VDO .Slice {
+	width: 100%;
+  position: relative;
+  padding-top: #{(9/16*100%)};
+  >*{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+}
+.VDOGrid.ratio4x3 .VDO .Slice {
+  padding-top: #{(3/4*100%)};
+}
+.FontXS {
+	font-size: 8pt;
+}
+
+.NoBorder {
+	border: none !important;
+}
+
+
+.btn-toggle {
+  top: 50%;
+  transform: translateY(-50%) translateX(-200%);
+	left: 50%;
+}
+.btn-toggle {
+  margin: 0 4rem;
+  padding: 0;
+  position: relative;
+  border: none;
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 1.5rem;
+  background: #fff;
+}
+.btn-toggle:focus, .btn-toggle.focus, .btn-toggle:focus.active, .btn-toggle.focus.active {
+  outline: none;
+}
+.btn-toggle:before, .btn-toggle:after {
+  line-height: 1.5rem;
+  width: 4rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.25s;
+}
+.btn-toggle:before {
+  content: "16:9";
+  left: -4rem;
+}
+.btn-toggle:after {
+  content: "4:3";
+  right: -4rem;
+  opacity: 0.5;
+}
+.btn-toggle > .handle {
+  position: absolute;
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 1.125rem;
+  background: #40a2db;
+  transition: left 0.25s;
+}
+.btn-toggle.active {
+  transition: background-color 0.25s;
+}
+.btn-toggle.active > .handle {
+  left: 1.6875rem;
+  transition: left 0.25s;
+}
+.btn-toggle.active:before {
+  opacity: 0.5;
+}
+.btn-toggle.active:after {
+  opacity: 1;
+}
+.btn-toggle.btn-sm:before, .btn-toggle.btn-sm:after {
+  line-height: -0.5rem;
+  color: #fff;
+  letter-spacing: 0.75px;
+  left: 0.4125rem;
+  width: 2.325rem;
+}
+.btn-toggle.btn-sm:before {
+  text-align: right;
+}
+.btn-toggle.btn-sm:after {
+  text-align: left;
+  opacity: 0;
+}
+.btn-toggle.btn-sm.active:before {
+  opacity: 0;
+}
+.btn-toggle.btn-sm.active:after {
+  opacity: 1;
+}
+.btn-toggle.btn-xs:before, .btn-toggle.btn-xs:after {
+  display: none;
+}
+.btn-toggle:before, .btn-toggle:after {
+  color: #fff;
+}
+.btn-toggle.active {
+  background-color: #fff;
+}
+
+.el-select{
+  .el-input{
+    height: 100%;
+    input{
+      height: 100%;
+      text-align: center;
+      border-radius: 0;
+      background: none;
+      border: solid 1px #5cb8ee;
+      color: #fff;
+    }
+    &.is-focus{
+      .el-input__inner{
+        border-color: #5cb8ee;
+      }
+    }
+  }
+  &:hover{
+    background-color: #5cb8ee;
+    .el-input__inner{
+      border-color: #5cb8ee;
+    }
+
+  }
+}
+.el-select-dropdown__list{
+  background: #40a2db;
+  color: #fff;
+  .el-select-dropdown__item{
+    height: auto;
+    padding: 1rem 1.5rem;
+    color: #fff;
+    &.selected,&.hover{
+      background: #fff;
+      color:#000;
+    }
+  }
+}
+.el-select-dropdown{
+  border: 0;
+  border-radius: 0;
+}
+.el-popper[x-placement^=bottom] .popper__arrow{
+  border-bottom-color: #40a2db;
+}
+.el-popper[x-placement^=bottom] .popper__arrow::after{
+  border-bottom-color: #40a2db;
+}
+.NoBorder{
+  
+  .el-select{
+    .el-input{
+      input{
+        border: 0;
+      }
+    }
+  }
+}
+.el-input__prefix{
+  display: flex;
+  left: 30px;
+  img{
+    align-self: center;
+  }
+}
