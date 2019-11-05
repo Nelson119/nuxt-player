@@ -51,6 +51,7 @@ export default {
   ** Build configuration
   */
   build: {
+    publicPath: 'nn',
     transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
