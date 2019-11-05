@@ -1,4 +1,8 @@
-
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/nuxt-player/'
+  }
+} : {}
 export default {
   mode: 'spa',
   /*
@@ -54,7 +58,5 @@ export default {
     extend (config, ctx) {
     }
   },
-  router: {
-    base: '/nuxt-player/'
-  }
+  ...routerBase
 }
