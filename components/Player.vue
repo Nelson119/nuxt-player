@@ -8,7 +8,7 @@
             <!-- <span class="FontXS">{{source}}</span> -->
         </div>
         <div class="Slice">
-            <video muted :playbackRate="playbackrate"  :poster="poster">
+            <video crossOrigin='anonymous' muted :playbackRate="playbackrate" >
                 <source :src="source">
             </video>
         </div>
@@ -16,6 +16,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
+const VueVideoPlayer = require('vue-video-player/dist/ssr')
+const hls = require('videojs-contrib-hls')
+Vue.use(hls)
+Vue.use(VueVideoPlayer)
+
 export default {
     name: 'video-set',
     data() {

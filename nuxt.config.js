@@ -3,6 +3,9 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
     base: '/nuxt-player/'
   }
 } : {}
+const publicPath = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  publicPath: 'N'
+} : {}
 export default {
   mode: 'spa',
   /*
@@ -51,13 +54,13 @@ export default {
   ** Build configuration
   */
   build: {
-    publicPath: 'N',
     transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    ...publicPath
   },
   ...routerBase
 }

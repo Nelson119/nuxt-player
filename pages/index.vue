@@ -1,7 +1,7 @@
 <template>
 <div class="Container">
   <div class="Player" ref="fullScreenContainer">
-	 <!--上排按鈕-->
+	  <!--上排按鈕-->
     <div class="Upper btn-group" role="group" aria-label="Button group with nested dropdown">
       <button @click="setPageSize(1)" type="button" class="Flex1 btn btn-primary"><img src="img/1-1.png"/><span style="vertical-align: text-bottom;"> 1</span></button>
       <button @click="setPageSize(4)" type="button" class="Flex1 btn btn-primary"><img src="img/1-4.png"/><span style="vertical-align: text-bottom;"> 4</span></button>
@@ -26,7 +26,7 @@
     </div>
     <div class="clearfix"></div>
 	  
-	<!--下排按鈕-->
+	  <!--下排按鈕-->
     <div class="Lower btn-group" role="group" aria-label="Button group with nested dropdown">
       <div class="Flex1 NoBorder btn-group" role="group">
         <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/back.png"/><span style="vertical-align: super;"> {{-currentPlaybackRate2}}X</span></button>
@@ -43,7 +43,7 @@
         </el-select>
       </div>
       <button @click="capture" type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/capture.png"/></button>
-	    <button type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/fullscreen.png"/></button>
+	    <button @click="requestFullScreen" type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/fullscreen.png"/></button>
     </div>
   </div>
   <canvas style="position: absolute;z-index:-1" id="canvas"></canvas>
@@ -84,7 +84,7 @@ export default {
       videos :(function(){
         var itemlist =[];
         var samples = [
-          'video/bipbop_16x9_variant.m3u8',
+          // 'video/bipbop_16x9_variant.m3u8',
           'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           'video/happyfit2.mp4'];
         for(var i=0;i<=113;i++){
@@ -208,33 +208,33 @@ export default {
       this.$forceUpdate();
     },
     capture: function(){
-        // console.log('capture');
-        var c = document.getElementById('canvas')
-        let ctx = c.getContext('2d');
-        let videos = document.querySelectorAll('video')
-        let w, h
-        for (let i = 0, len = videos.length; i < len; i++) {
-            const v = videos[i]
-            // if (!v.src) continue // no video here
-            try {
-                w = v.videoWidth
-                h = v.videoHeight
-                c.width = w
-                c.height = h
-                // ctx.fillRect(0, 0, w, h)
-                ctx.drawImage(v, 0, 0, w, h)
-                // console.log(`${canvas.toDataURL()}`);
-                var back =  `url(${c.toDataURL()})`;
-                v.style.backgroundImage = back; // here is the magic
-                v.style.backgroundSize = 'cover' 
-                // ctx.clearRect(0, 0, w, h); // clean the canvas
-                break;
-            } catch (e) {
-                continue
-            }
-        }
+      // console.log('capture');
+      var c = document.getElementById('canvas')
+      let ctx = c.getContext('2d');
+      let videos = document.querySelectorAll('video')
+      let w, h
+      for (let i = 0, len = videos.length; i < len; i++) {
+          const v = videos[i]
+          // if (!v.src) continue // no video here
+          try {
+              w = v.videoWidth
+              h = v.videoHeight
+              c.width = w
+              c.height = h
+              // ctx.fillRect(0, 0, w, h)
+              ctx.drawImage(v, 0, 0, w, h)
+              // console.log(`${canvas.toDataURL()}`);
+              var back =  `url(${c.toDataURL()})`;
+              v.parentNode.style.background = back+'center center/ 100% auto no-repeat';
+              // v.class="hide"; 
+              ctx.clearRect(0, 0, w, h); // clean the canvas
+              // break;
+          } catch (e) {
+              continue
+          }
+      }
 
-      html2canvas(this.$refs.capture,{useCORS: true}).then(canvas => { 
+      html2canvas(this.$refs.capture,{allowTaint:true}).then(canvas => { 
 
 
         let link = document.createElement('a');
@@ -245,9 +245,13 @@ export default {
         link.style.display = 'none';
         document.body.appendChild(link);
         link.click();
+        for (let i = 0, len = videos.length; i < len; i++) {
+            const v = videos[i]
+            v.parentNode.style = '';
+        }
       });
     },
-    requestFullScreen(){
+    requestFullScreen: function(){
       let elem = this.$refs.fullScreenContainer;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
