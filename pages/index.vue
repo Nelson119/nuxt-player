@@ -234,7 +234,7 @@ export default {
             }
         }
 
-      html2canvas(this.$refs.capture).then(canvas => { 
+      html2canvas(this.$refs.capture,{useCORS: true}).then(canvas => { 
 
 
         let link = document.createElement('a');
