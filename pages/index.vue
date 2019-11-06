@@ -20,8 +20,8 @@
     </div>
 	  <!--主影片區-->
 	  <div :class="[{'ratio4x3':is16x9},'VDOGrid']" ref="capture">
-      <VideoSet v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
-        :source="item.source" :poster="item.poster">
+      <VideoSet :source="{ withCredentials: false, src: item.source }" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
+         :poster="item.poster" :index="index">
       </VideoSet>
     </div>
     <div class="clearfix"></div>
@@ -90,7 +90,7 @@ export default {
       videos :(function(){
         var itemlist =[];
         var samples = [
-          // 'video/bipbop_16x9_variant.m3u8',
+          'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
           'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           'video/happyfit2.mp4'];
         for(var i=0;i<=113;i++){
