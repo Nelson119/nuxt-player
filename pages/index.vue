@@ -1,6 +1,6 @@
 <template>
 <div class="Container">
-  <div class="Player">
+  <div class="Player" ref="fullScreenContainer">
 	 <!--上排按鈕-->
     <div class="Upper btn-group" role="group" aria-label="Button group with nested dropdown">
       <button @click="setPageSize(1)" type="button" class="Flex1 btn btn-primary"><img src="img/1-1.png"/><span style="vertical-align: text-bottom;"> 1</span></button>
@@ -246,6 +246,18 @@ export default {
         document.body.appendChild(link);
         link.click();
       });
+    },
+    requestFullScreen(){
+      let elem = this.$refs.fullScreenContainer;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
     }
   }
 }
