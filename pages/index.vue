@@ -142,7 +142,7 @@ export default {
       }
     },
     stop: function(){
-    // console.log('stop');
+      // console.log('stop');
       var players = document.getElementsByTagName('video');
       for(var index in players){
         var player = players[index];
@@ -150,9 +150,14 @@ export default {
           // console.log(player)
         if(player.currentTime){
           player.pause();
-          player.load();
-          // player.currentTime = 0;
         }
+        if(player.currentTime){
+          player.currentTime = 0;
+        }
+        // if(player.load){
+        //   console.log(player.src)
+        //   player.src(''); // empty string
+        // }
       }
     },
     playbackRateForward: function(){

@@ -8,7 +8,7 @@
             <!-- <span class="FontXS">{{source}}</span> -->
         </div>
         <div class="Slice">
-            <video :id="'key'+index" v-if="source" crossOrigin='anonymous' muted :playbackRate="playbackrate" >
+            <video v-if="source.src" :id="'key'+index" crossOrigin='anonymous' muted :playbackRate="playbackrate" >
                 <source :src="source.src">
             </video>
 
@@ -65,7 +65,7 @@ export default {
         }
     },
     mounted: function () {
-        console.log(this.index)
+        // console.log(this.index)
         videojs('key'+this.index, {
             bigPlayButton: false,
             textTrackDisplay: false,
