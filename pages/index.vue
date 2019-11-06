@@ -63,7 +63,13 @@ export default {
   computed: {
     pagedVideoList : function(){
       var currentPage=this.currentPage,pageSize=this.pageSize;
-      return this.videos.slice((currentPage-1)*pageSize,currentPage*pageSize);
+      var ret = this.videos.slice((currentPage-1)*pageSize,currentPage*pageSize);
+      if(ret.length < this.pageSize){
+        for(var i = ret.length;i<pageSize;i++){
+          ret.push({});
+        }
+      }
+      return ret;
     },
     totalPage : function(){
       return Math.ceil(this.videos.length / this.pageSize);

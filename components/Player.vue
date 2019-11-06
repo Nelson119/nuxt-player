@@ -8,7 +8,7 @@
             <!-- <span class="FontXS">{{source}}</span> -->
         </div>
         <div class="Slice">
-            <video crossOrigin='anonymous' muted :playbackRate="playbackrate" >
+            <video v-if="source" crossOrigin='anonymous' muted :playbackRate="playbackrate" >
                 <source :src="source">
             </video>
         </div>
