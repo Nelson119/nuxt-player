@@ -4,7 +4,7 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   }
 } : {}
 const publicPath = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-  publicPath: 'N'
+  publicPath: 'js'
 } : {}
 export default {
   mode: 'spa',
