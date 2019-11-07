@@ -1,7 +1,5 @@
 const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-  router: {
-    base: '/nuxt-player/'
-  }
+  base: '/nuxt-player/'
 } : {}
 const publicPath = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   publicPath: 'N'
@@ -62,5 +60,7 @@ export default {
     },
     ...publicPath
   },
-  ...routerBase
+  router: {
+    ...routerBase
+  }
 }

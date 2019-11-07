@@ -20,7 +20,7 @@
     </div>
 	  <!--主影片區-->
 	  <div :class="[{'ratio4x3':is16x9},'VDOGrid']" ref="capture">
-      <VideoSet :source="{ withCredentials: false, src: item.source }" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
+      <VideoSet :ref="'videoplayer'" :source="{ withCredentials: false, src: item.source }" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
          :poster="item.poster" :index="index">
       </VideoSet>
     </div>
@@ -53,6 +53,7 @@
 <script>
 import VideoSet from '~/components/Player.vue'
 import html2canvas from 'html2canvas'
+const axios = require('axios');
 
 export default {
   name: 'index',
@@ -87,28 +88,7 @@ export default {
   },
   data: () => {
     return {
-      videos :(function(){
-        var itemlist =[];
-        var samples = [
-          'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
-          'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
-          'video/happyfit2.mp4'];
-        for(var i=0;i<=113;i++){
-          var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
-          var item = {
-            title: "影像串流名稱影像串流名稱影像串流名稱影像串流名稱",
-            time: "10/17/2019 07:00:56",
-            info: "tyu-ido1-20190917-090249",
-            filename: "LL40202702",
-            index: i,
-            poster: "img/16-9.jpg",
-            source: samples[rand]
-          };
-          item.title=item.title+(i+1);
-          itemlist.push(item);
-        }
-        return itemlist;
-      }()),
+      videos :[],
       forwardOption: [0.25,0.5,1,4,8,16],
       is16x9 : false,
       currentPlaybackRate: 1,
@@ -117,6 +97,24 @@ export default {
       pageSize: 9
     }
   },
+  mounted: function(){
+    // console.log(this.$route.query)
+    var _this = this;
+    if(this.$route.query.json){
+      axios.get(this.$route.query.json).then((res) =>{
+        // console.log(res.data)
+        _this.videos = res.data;
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+    }else{
+      this.fakeVideoList();
+    }
+    // console.log(JSON.stringify(this.videos));
+  },
   methods: {
     turn16x9: function () {
       // console.log(this)
@@ -124,7 +122,8 @@ export default {
       // some code to filter users
     },
     play: function(){
-      var players = document.getElementsByTagName('video');
+      var players = this.$refs.videoplayer;
+      // console.log(players);
       for(var index in players){
         var player = players[index];
         // console.log(player.play)
@@ -133,7 +132,7 @@ export default {
       }
     },
     pause: function(){
-      var players = document.getElementsByTagName('video');
+      var players = this.$refs.videoplayer;
       for(var index in players){
         var player = players[index];
         // console.log(player.pause)
@@ -143,71 +142,23 @@ export default {
     },
     stop: function(){
       // console.log('stop');
-      var players = document.getElementsByTagName('video');
+      var players = this.$refs.videoplayer;
       for(var index in players){
         var player = players[index];
-        // console.log(player.stop)
-          // console.log(player)
-        if(player.currentTime){
-          player.pause();
-        }
-        if(player.currentTime){
-          player.currentTime = 0;
-        }
-        // if(player.load){
-        //   console.log(player.src)
-        //   player.src(''); // empty string
-        // }
-      }
-    },
-    playbackRateForward: function(){
-      var players = document.getElementsByTagName('video');
-      if(this.currentPlaybackRate < 4){
-        this.currentPlaybackRate += 1;
-        this.currentPlaybackRate2 = -1;
-      }else{
-        this.currentPlaybackRate = 1;
-      }
-
-      for(var index in players){
-        var player = players[index];
-        // console.log(this.currentPlaybackRate)
-        // console.log('player.playbackRate', player.playbackRate)
-        if(player.playbackRate){
-          player.playbackRate = this.currentPlaybackRate;
-        }
-      }
-    },
-    playbackRateBackward: function(){
-      var players = document.getElementsByTagName('video');
-      if(this.currentPlaybackRate2 > -4){
-        this.currentPlaybackRate2 -= 1;
-        this.currentPlaybackRate = 1;
-      }else{
-        this.currentPlaybackRate2 = -1;
-      }
-
-      for(var index in players){
-        var player = players[index];
-        // console.log(this.currentPlaybackRate2)
-        // console.log('player.playbackRate', player.playbackRate)
-        if(player.playbackRate){
-          player.playbackRate = this.currentPlaybackRate2;
-        }
+        player.stop();
       }
     },
     playbackRateChange: function(){
-      var players = document.getElementsByTagName('video');
+      var players = this.$refs.videoplayer;
       for(var index in players){
         var player = players[index];
-        // console.log(this.currentPlaybackRate)
-        // console.log('player.playbackRate', player.playbackRate)
         if(player.playbackRate){
-          player.playbackRate = this.currentPlaybackRate;
+          player.playbackRate(this.currentPlaybackRate);
         }
       }
     },
     setPageSize: function(n){
+      // this.pageIndexChange();
       this.pageSize = n;
       this.currentPage = 1;
     },
@@ -215,8 +166,7 @@ export default {
       return this.videoSource[i];
     },
     pageIndexChange: function(){
-      this.stop();
-      this.$forceUpdate();
+      // this.stop();
     },
     capture: function(){
       // console.log('capture');
@@ -273,6 +223,28 @@ export default {
       } else if (elem.msRequestFullscreen) { /* IE/Edge */
         elem.msRequestFullscreen();
       }
+    },
+    fakeVideoList: function(){
+        var itemlist =[];
+        var samples = [
+          'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+          'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
+          'video/happyfit2.mp4'];
+        for(var i=0;i<=113;i++){
+          var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
+          var item = {
+            title: "影像串流名稱影像串流名稱影像串流名稱影像串流名稱",
+            time: "10/17/2019 07:00:56",
+            info: "tyu-ido1-20190917-090249",
+            filename: "LL40202702",
+            index: i,
+            poster: "img/16-9.jpg",
+            source: samples[rand]
+          };
+          item.title=item.title+(i+1);
+          itemlist.push(item);
+        }
+        this.videos = itemlist;
     }
   }
 }

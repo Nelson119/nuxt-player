@@ -8,10 +8,11 @@
             <!-- <span class="FontXS">{{source}}</span> -->
         </div>
         <div class="Slice">
-            <video v-if="source.src" :id="'key'+index" crossOrigin='anonymous' muted :playbackRate="playbackrate" >
-                <source :src="source.src">
-            </video>
-
+            <div v-if="source.src">
+                <video :id="'key'+index" crossOrigin='anonymous' muted :playbackRate="playbackrate" >
+                    <!-- <source :src="source.src"> -->
+                </video>
+            </div>
             <!-- <video-player 
                 :options="{...playerOptions, sources: source}">
             </video-player> -->
@@ -47,6 +48,9 @@ export default {
         //     html5: { hls: { withCredentials: false }},
         // //   poster: "path-to/static/images/surmon-5.jpg"
         // }
+        player: {},
+        initialed: false,
+        sourceCache: undefined,
       }
     },
     // components:{VideoPlayer},
@@ -56,26 +60,83 @@ export default {
             document.querySelector('video').playbackRate = playbackRate;
         },
 
-        playerReadied(player) {
-            var hls = player.tech({ IWillNotUseThisInPlugins: true }).hls
-            player.tech_.hls.xhr.beforeRequest = function(options) {
-            // console.log(options)
-            return options
+        // playerReadied(player) {
+        //     var hls = player.tech({ IWillNotUseThisInPlugins: true }).hls
+        //     player.tech_.hls.xhr.beforeRequest = function(options) {
+        //     // console.log(options)
+        //     return options
+        //     }
+        // },
+        play: function(){
+            if(this.player.play){
+                this.player.play();
             }
+        },
+        pause: function(){
+            if(this.player.pause){
+                this.player.pause();
+            }
+        },
+        stop: function(){
+            if(this.player.pause){
+                this.player.pause();
+            }
+            if(this.player.currentTime){
+                this.player.currentTime(0);
+            }
+            // this.init();
+        },
+        playbackRate: function(rate){
+            if(this.player.playbackRate){
+                this.player.playbackRate(rate);
+            }
+            
+        },
+        init: function(){
+            var $this = this;
+            var key = 'key'+$this.index;
+            if(document.getElementById(key)){
+            // console.log(this.index);
+                videojs('key'+$this.index, {
+                    bigPlayButton: false,
+                    textTrackDisplay: false,
+                    posterImage: true,
+                    errorDisplay: false,
+                    controlBar: true
+                }, function () {
+                    this.src({
+                        src: $this.source.src
+                    });
+                    $this.player = this;
+                    // console.log(this.play)
+                });
+            }
+        },
+        dispose: function(){
+            try{
+                if(this.player.dispose){
+                    this.player.dispose();
+                }
+            }catch(e){}
         }
+
     },
     mounted: function () {
-        // console.log(this.index)
-        videojs('key'+this.index, {
-            bigPlayButton: false,
-            textTrackDisplay: false,
-            posterImage: true,
-            errorDisplay: false,
-            controlBar: true
-        }, function () {
-            // this.play()
+        this.sourceCache = this.source
+        this.init();
+    } ,
+    destroyed: function(){
+        this.dispose();
+    },
+    updated: function(){
+        // console.log(this.player);
+        this.player.src({
+            src: this.source.src
         });
-    } 
+    },
+    beforeUpdate:function(){
+        // this.sourceCache = this.source;
+    }
 }
 </script>
 <style lang="scss">
