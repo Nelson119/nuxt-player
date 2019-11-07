@@ -137,6 +137,7 @@ export default {
         console.log(this.player);
         this.init();
         if(this.player.src){
+            this.stop();
             this.player.src({
                 src: this.source.src
             });
