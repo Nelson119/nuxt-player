@@ -20,9 +20,11 @@
     </div>
 	  <!--主影片區-->
 	  <div :class="[{'ratio4x3':is16x9},'VDOGrid']" ref="capture">
-      <VideoSet :source="{ withCredentials: false, src: item.source }" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
-         :poster="item.poster" :index="index">
-      </VideoSet>
+      <div v-for="(item, index) in pagedVideoList" :key="index">
+        <VideoSet v-if="item.source" :source="{ withCredentials: false, src: item.source }"  :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
+          :poster="item.poster" :index="index">
+        </VideoSet>
+      </div>
     </div>
     <div class="clearfix"></div>
 	  
@@ -47,7 +49,9 @@
     </div>
   </div>
   <canvas style="position: absolute;z-index:-1" id="canvas"></canvas>
+  <!-- {{JSON.stringify(this.videos)}} -->
 </div>
+
 </template>
 
 <script>
@@ -85,31 +89,12 @@ export default {
       return className;
     }
   },
+  mounted() {
+    console.log(this.$route.query);
+  },
   data: () => {
     return {
-      videos :(function(){
-        var itemlist =[];
-        var samples = [
-          'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
-          'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
-          'video/happyfit2.mp4',
-          'video/bipbop_16x9_variant.m3u8'];
-        for(var i=0;i<=113;i++){
-          var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
-          var item = {
-            title: "影像串流名稱影像串流名稱影像串流名稱影像串流名稱",
-            time: "10/17/2019 07:00:56",
-            info: "tyu-ido1-20190917-090249",
-            filename: "LL40202702",
-            index: i,
-            poster: "img/16-9.jpg",
-            source: samples[rand]
-          };
-          item.title=item.title+(i+1);
-          itemlist.push(item);
-        }
-        return itemlist;
-      }()),
+      videos : [],
       forwardOption: [0.25,0.5,1,4,8,16],
       is16x9 : false,
       currentPlaybackRate: 1,
@@ -274,6 +259,29 @@ export default {
       } else if (elem.msRequestFullscreen) { /* IE/Edge */
         elem.msRequestFullscreen();
       }
+    },
+    fakeVideoList: function(){
+      var itemlist =[];
+      var samples = [
+        'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+        'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
+        'video/happyfit2.mp4',
+        'video/bipbop_16x9_variant.m3u8'];
+      for(var i=0;i<=113;i++){
+        var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
+        var item = {
+          title: "影像串流名稱影像串流名稱影像串流名稱影像串流名稱",
+          time: "10/17/2019 07:00:56",
+          info: "tyu-ido1-20190917-090249",
+          filename: "LL40202702",
+          index: i,
+          poster: "img/16-9.jpg",
+          source: samples[rand]
+        };
+        item.title=item.title+(i+1);
+        itemlist.push(item);
+      }
+      this.videos = itemlist;
     }
   }
 }
