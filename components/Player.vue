@@ -124,15 +124,23 @@ export default {
     mounted: function () {
         this.sourceCache = this.source
         this.init();
+        if(this.player.src){
+            this.player.src({
+                src: this.source.src
+            });
+        }
     } ,
     destroyed: function(){
         this.dispose();
     },
     updated: function(){
-        // console.log(this.player);
-        this.player.src({
-            src: this.source.src
-        });
+        console.log(this.player);
+        this.init();
+        if(this.player.src){
+            this.player.src({
+                src: this.source.src
+            });
+        }
     },
     beforeUpdate:function(){
         // this.sourceCache = this.source;

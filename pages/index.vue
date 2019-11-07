@@ -47,7 +47,9 @@
     </div>
   </div>
   <canvas style="position: absolute;z-index:-1" id="canvas"></canvas>
+  <!-- {{JSON.stringify(this.videos)}} -->
 </div>
+
 </template>
 
 <script>
@@ -86,9 +88,12 @@ export default {
       return className;
     }
   },
+  mounted() {
+    console.log(this.$route.query);
+  },
   data: () => {
     return {
-      videos :[],
+      videos : [],
       forwardOption: [0.25,0.5,1,4,8,16],
       is16x9 : false,
       currentPlaybackRate: 1,
