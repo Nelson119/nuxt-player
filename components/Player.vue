@@ -9,6 +9,7 @@
         <div class="Slice">
             <div v-if="source">
                 <video :id="'key'+index" crossOrigin='anonymous' muted>
+                    <source :src="source"></source>
                 </video>
             </div>
         </div>
@@ -44,7 +45,7 @@ export default {
         // }
         player: {},
         initialed: false,
-        sourceCache: undefined,
+        // sourceCache: undefined,
       }
     },
     // components:{VideoPlayer},
@@ -86,7 +87,7 @@ export default {
             }
             
         },
-        init: function(){
+        init: function(callback){
             var $this = this;
             var key = 'key'+$this.index;
             if(document.getElementById(key)){
@@ -102,7 +103,8 @@ export default {
                         src: $this.source
                     });
                     $this.player = this;
-                    // console.log(this.play)
+                    (callback||function(){})();
+                    console.log('this.player ready')
                 });
             }
         },
@@ -116,27 +118,25 @@ export default {
 
     },
     mounted: function () {
-        this.init();
-        if(this.player && this.player.src){
-            this.stop();
-            this.player.src({
-                src: this.source
+        var $this = this;
+            this.init(() => {
+                console.log($this.player);
+                if($this.player && $this.player.src){
+                    $this.stop();
+                    $this.player.src({
+                        src: $this.source
+                    });
+                }
             });
-        }
     } ,
     destroyed: function(){
         this.dispose();
     },
     updated: function(){
-        // console.log('updated');
-        // console.log('this.source.src != this.sourceCache', this.source.src != this.sourceCache);
-        // if(this.player && this.player.src && this.source.src != this.sourceCache){
-        //     this.init();
-        //     this.stop();
-        //     this.player.src({
-        //         src: this.source.src
-        //     });
-        // }
+        if(!this.player || !this.player.src){
+            console.log('init value')
+            this.init();
+        }
     },
     beforeUpdate:function(){
         // if(this.player && this.player.src){
@@ -144,12 +144,16 @@ export default {
         // }
     },
     watch: {
-        source: function(value,value2){
-            console.log(value,value2);
-            if(this.player && this.player.src && this.source != this.sourceCache){
-                this.stop();
-                this.player.src({
-                    src: this.source
+        source: function(value){
+            console.log('value',value)
+            var $this = this;
+            if(!this.player || !this.player.src){
+                console.log('init value')
+                this.init();
+            }else{
+                $this.stop();
+                $this.player.src({
+                    src: $this.source
                 });
             }
         }
