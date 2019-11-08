@@ -233,7 +233,7 @@ export default {
         var itemlist =[];
         var samples = [
           'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
-          'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
+          // 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           'video/happyfit2.mp4'];
         for(var i=0;i<=113;i++){
           var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);

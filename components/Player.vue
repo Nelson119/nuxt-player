@@ -19,7 +19,6 @@
 <script>
 import Vue from 'vue'
 import 'video.js/dist/video-js.css';
-// import 'vue-video-player/src/custom-theme.css';
 import videojs from 'video.js'
 import 'videojs-contrib-hls'
 window.videojs = videojs;
