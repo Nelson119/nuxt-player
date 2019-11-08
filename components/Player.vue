@@ -9,7 +9,7 @@
         </div>
         <div class="Slice">
             <div v-if="source.src">
-                <video :id="'key'+index" crossOrigin='anonymous' muted :playbackRate="playbackrate" >
+                <video :id="'key'+index" crossOrigin='anonymous' muted>
                     <!-- <source :src="source.src"> -->
                 </video>
             </div>
@@ -56,8 +56,8 @@ export default {
     // components:{VideoPlayer},
     props:['index','classnames', 'source','playbackrate','poster','title','time','filename','info','sources'],
     methods: {
-        setPlayBackRate: () =>{
-            document.querySelector('video').playbackRate = playbackRate;
+        setPlayBackRate: (playbackRate) =>{
+            document.document.queryselectorall('video').playbackRate = playbackRate;
         },
 
         // playerReadied(player) {
@@ -122,7 +122,7 @@ export default {
 
     },
     mounted: function () {
-        this.sourceCache = this.source
+        this.sourceCache = this.source.src
         this.init();
         if(this.player.src){
             this.player.src({
@@ -134,9 +134,10 @@ export default {
         this.dispose();
     },
     updated: function(){
-        console.log(this.player);
-        this.init();
-        if(this.player.src){
+        console.log(this.source.src);
+        console.log(this.sourceCache);
+        if(this.player && this.player.src && this.source.src != this.sourceCache){
+            this.init();
             this.stop();
             this.player.src({
                 src: this.source.src
@@ -144,7 +145,9 @@ export default {
         }
     },
     beforeUpdate:function(){
-        // this.sourceCache = this.source;
+        // if(this.player && this.player.src){
+            this.sourceCache = this.source.src;
+        // }
     }
 }
 </script>
