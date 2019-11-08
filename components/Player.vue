@@ -5,18 +5,12 @@
             <span>{{info}}</span><br>
             <span class="FontXS">{{time}}</span><br>
             <span class="FontXS">{{filename}}</span>
-            <!-- <span class="FontXS">{{source}}</span> -->
         </div>
         <div class="Slice">
-            <div v-if="source.src">
+            <div v-if="source">
                 <video :id="'key'+index" crossOrigin='anonymous' muted>
-                    <!-- <source :src="source.src"> -->
                 </video>
             </div>
-            <!-- <video-player 
-                :options="{...playerOptions, sources: source}">
-            </video-player> -->
-            <!-- <video-player :source="source"></video-player> -->
         </div>
     </div>
 </template>
@@ -105,7 +99,7 @@ export default {
                     controlBar: true
                 }, function () {
                     this.src({
-                        src: $this.source.src
+                        src: $this.source
                     });
                     $this.player = this;
                     // console.log(this.play)
@@ -122,11 +116,11 @@ export default {
 
     },
     mounted: function () {
-        this.sourceCache = this.source.src
         this.init();
-        if(this.player.src){
+        if(this.player && this.player.src){
+            this.stop();
             this.player.src({
-                src: this.source.src
+                src: this.source
             });
         }
     } ,
@@ -134,20 +128,31 @@ export default {
         this.dispose();
     },
     updated: function(){
-        console.log(this.source.src);
-        console.log(this.sourceCache);
-        if(this.player && this.player.src && this.source.src != this.sourceCache){
-            this.init();
-            this.stop();
-            this.player.src({
-                src: this.source.src
-            });
-        }
+        // console.log('updated');
+        // console.log('this.source.src != this.sourceCache', this.source.src != this.sourceCache);
+        // if(this.player && this.player.src && this.source.src != this.sourceCache){
+        //     this.init();
+        //     this.stop();
+        //     this.player.src({
+        //         src: this.source.src
+        //     });
+        // }
     },
     beforeUpdate:function(){
         // if(this.player && this.player.src){
-            this.sourceCache = this.source.src;
+            // this.sourceCache = this.source.src;
         // }
+    },
+    watch: {
+        source: function(value,value2){
+            console.log(value,value2);
+            if(this.player && this.player.src && this.source != this.sourceCache){
+                this.stop();
+                this.player.src({
+                    src: this.source
+                });
+            }
+        }
     }
 }
 </script>

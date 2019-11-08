@@ -20,7 +20,7 @@
     </div>
 	  <!--主影片區-->
 	  <div :class="[{'ratio4x3':is16x9},'VDOGrid']" ref="capture">
-      <VideoSet :ref="'videoplayer'" :source="{ withCredentials: false, src: item.source }" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
+      <VideoSet :ref="'videoplayer'" :source="item.source" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
          :poster="item.poster" :index="index">
       </VideoSet>
     </div>
