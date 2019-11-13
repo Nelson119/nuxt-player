@@ -55,6 +55,7 @@ body {
   flex: 2;
   background-color: #40a2db;
   border: solid 1px #5cb8ee;
+
 }
 .Player .Dropdown {
   width: 100%;
@@ -125,6 +126,11 @@ body {
   width: 3rem;
   border-radius: 1.5rem;
   background: #fff;
+  display: block;
+  justify-self: center;
+  align-self: center;
+  margin: 0 auto;
+  position: relative;
 }
 .btn-toggle:focus, .btn-toggle.focus, .btn-toggle:focus.active, .btn-toggle.focus.active {
   outline: none;
