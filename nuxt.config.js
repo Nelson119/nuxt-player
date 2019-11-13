@@ -61,6 +61,6 @@ export default {
     ...publicPath
   },
   router: {
-    // base: '/player/'
+    ...routerBase
   }
 }
