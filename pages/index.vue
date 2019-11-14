@@ -1,6 +1,6 @@
 <template>
-<div class="Container">
-  <div class="Player" ref="fullScreenContainer">
+<div class="Container" ref="fullScreenContainer">
+  <div class="Player">
 	  <!--上排按鈕-->
     <div class="Upper btn-group" role="group" aria-label="Button group with nested dropdown">
       <button @click="setPageSize(1)" type="button" class="Flex1 btn btn-primary"><img src="img/1-1.png"/><span style="vertical-align: text-bottom;"> 1</span></button>
@@ -164,6 +164,7 @@ export default {
     },
     setPageSize: function(n){
       // this.pageIndexChange();
+      this.stop();
       this.pageSize = n;
       this.currentPage = 1;
     },
@@ -171,7 +172,7 @@ export default {
       return this.videoSource[i];
     },
     pageIndexChange: function(){
-      // this.stop();
+      this.stop();
     },
     capture: function(){
       // console.log('capture');
