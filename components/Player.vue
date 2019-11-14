@@ -62,26 +62,26 @@ export default {
         //     }
         // },
         play: function(){
-            if(this.player.play){
+            if(this.source && this.player.play){
                 this.player.play();
             }
         },
         pause: function(){
-            if(this.player.pause){
+            if(this.source && this.player.pause){
                 this.player.pause();
             }
         },
         stop: function(){
-            if(this.player.pause){
+            if(this.source && this.player.pause){
                 this.player.pause();
             }
-            if(this.player.currentTime){
+            if(this.source && this.player.currentTime){
                 this.player.currentTime(0);
             }
             // this.init();
         },
         playbackRate: function(rate){
-            if(this.player.playbackRate){
+            if(this.source && this.player.playbackRate){
                 this.player.playbackRate(rate);
             }
             
@@ -89,7 +89,7 @@ export default {
         init: function(callback){
             var $this = this;
             var key = 'key'+$this.index;
-            if(document.getElementById(key)){
+            if(this.source && document.getElementById(key)){
             // console.log(this.index);
                 videojs('key'+$this.index, {
                     bigPlayButton: false,
@@ -144,6 +144,9 @@ export default {
     },
     watch: {
         source: function(value){
+            if(!value){
+                return;
+            }
             console.log('value',value)
             var $this = this;
             if(!this.player || !this.player.src){
