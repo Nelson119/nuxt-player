@@ -46,7 +46,7 @@
 	    <button @click="requestFullScreen" type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/fullscreen.png"/></button>
     </div>
   </div>
-  <canvas style="position: absolute;z-index:-1" id="canvas"></canvas>
+  <canvas id="canvas"></canvas>
   <!-- {{JSON.stringify(this.videos)}} -->
 </div>
 
@@ -203,19 +203,28 @@ export default {
 
       html2canvas(this.$refs.capture,{allowTaint:true}).then(canvas => { 
 
-
-        let link = document.createElement('a');
-        // link.target = '_blank';
-        link.href = canvas.toDataURL();
-        // console.log(link);
-        link.setAttribute('download', 'capture-'+new Date*1+'.png');
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        for (let i = 0, len = videos.length; i < len; i++) {
-            const v = videos[i]
-            v.parentNode.style = '';
+        if (canvas.msToBlob) { //for IE
+          let elem = this.$refs.capture;
+          canvas.id = 'capture';
+          // elem.appendChild(canvas);
+          var blob = canvas.msToBlob();
+          window.navigator.msSaveBlob(blob, 'capture-'+new Date*1+'.png');
+        }else{
+          let link = document.createElement('a');
+          // link.target = '_blank';
+          link.href = canvas.toDataURL();
+          // console.log(link);
+          link.setAttribute('download', 'capture-'+new Date*1+'.png');
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
         }
+        try{
+          for (let i = 0, len = videos.length; i < len; i++) {
+              const v = videos[i]
+              v.parentNode.style = '';
+          }
+        }catch(e){}
       });
     },
     requestFullScreen: function(){
@@ -261,4 +270,21 @@ export default {
 <style lang="scss">
  @import '../assets/scss/bootstrap.scss';
  @import '../assets/scss/main.scss';
+ #capture{
+   z-index: 10;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   opacity: 0;
+ }
+ #canvas{
+   z-index: -1;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+ }
 </style>
