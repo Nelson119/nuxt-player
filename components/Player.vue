@@ -1,5 +1,5 @@
 <template>
-    <div :class="classnames">
+    <div :class="classnames" :data-initialed="initialed">
         <div class="Title">{{this.title}}</div>
         <div class="Info">
             <span>{{info}}</span><br>
@@ -53,7 +53,14 @@ export default {
         setPlayBackRate: (playbackRate) =>{
             document.document.queryselectorall('video').playbackRate = playbackRate;
         },
-
+        setPlayTime: function(seconds){
+            if(this.source && this.player.currentTime){
+                var current = this.player.currentTime();
+                // console.log('from',current);
+                this.player.currentTime( current + seconds );
+                // console.log('to',this.player.currentTime());
+            }
+        },
         // playerReadied(player) {
         //     var hls = player.tech({ IWillNotUseThisInPlugins: true }).hls
         //     player.tech_.hls.xhr.beforeRequest = function(options) {
@@ -104,6 +111,7 @@ export default {
                     $this.player = this;
                     (callback||function(){})();
                     console.log('this.player ready')
+                    $this.initialed = true;
                 });
             }
         },
@@ -119,7 +127,7 @@ export default {
     mounted: function () {
         var $this = this;
             this.init(() => {
-                console.log($this.player);
+                // console.log($this.player);
                 if($this.player && $this.player.src){
                     $this.stop();
                     $this.player.src({
@@ -133,7 +141,7 @@ export default {
     },
     updated: function(){
         if(!this.player || !this.player.src){
-            console.log('init value')
+            // console.log('init value')
             this.init();
         }
     },
@@ -147,10 +155,10 @@ export default {
             if(!value){
                 return;
             }
-            console.log('value',value)
+            // console.log('value',value)
             var $this = this;
             if(!this.player || !this.player.src){
-                console.log('init value')
+                // console.log('init value')
                 this.init();
             }else{
                 $this.stop();
@@ -173,6 +181,13 @@ export default {
     }
     .vjs-control-bar,.vjs-big-play-button{
         display: none;
+    }
+}
+.VDO{
+    opacity: 0.1;
+    transition-duration: 0.2s;
+    &[data-initialed=true]{
+        opacity: inherit;
     }
 }
 </style>

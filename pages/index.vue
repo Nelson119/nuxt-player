@@ -29,7 +29,7 @@
 	  <!--下排按鈕-->
     <div class="Lower btn-group" role="group" aria-label="Button group with nested dropdown">
       <div class="Flex1 NoBorder btn-group" role="group">
-        <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/back.png"/><span style="vertical-align: super;"> {{-currentPlaybackRate2}}X</span></button>
+        <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" @click="setPlayTime"><img src="img/back2.png"/><span style="vertical-align: super;"> {{-backSeconds}}s</span></button>
       </div>
       <button type="button" @click="play" class="Flex1 NoBorder btn btn-primary"><img src="img/play.png"/></button>
       <button type="button" @click="pause" class="Flex1 NoBorder btn btn-primary"><img src="img/pause.png"/></button>
@@ -97,7 +97,7 @@ export default {
       forwardOption: [0.25,0.5,1,4,8,16],
       is16x9 : false,
       currentPlaybackRate: 1,
-      currentPlaybackRate2: -1,
+      backSeconds: -3,
       currentPage: 1,
       pageSize: 9
     }
@@ -228,7 +228,7 @@ export default {
       });
     },
     requestFullScreen: function(){
-      let elem = this.$refs.fullScreenContainer;
+      let elem = document.body;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem.mozRequestFullScreen) { /* Firefox */
@@ -262,6 +262,15 @@ export default {
           itemlist.push(item);
         }
         this.videos = itemlist;
+    },
+    setPlayTime: function(){
+      var players = this.$refs.videoplayer;
+      for(var index in players){
+        var player = players[index];
+        if(player.setPlayTime){
+          player.setPlayTime(this.backSeconds);
+        }
+      }
     }
   }
 }
