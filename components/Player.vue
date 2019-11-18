@@ -41,6 +41,9 @@ export default {
             document.document.queryselectorall('video').playbackRate = playbackRate;
         },
         setPlayTime: function(seconds){
+            if(!this.initialed){
+                return false;
+            }
             if(this.source && this.player.currentTime){
                 var current = this.player.currentTime();
                 // console.log('from',current);
@@ -49,6 +52,9 @@ export default {
             }
         },
         play: function(){
+            if(!this.initialed){
+                return false;
+            }
             if(this.isRewind){
                 clearInterval(this.intervalRewind);
             }
@@ -57,6 +63,9 @@ export default {
             }
         },
         pause: function(){
+            if(!this.initialed){
+                return false;
+            }
             if(this.isRewind){
                 clearInterval(this.intervalRewind);
             }
@@ -66,6 +75,9 @@ export default {
             }
         },
         stop: function(){
+            if(!this.initialed){
+                return false;
+            }
             if(this.source && this.player.pause){
                 this.player.pause();
             }
@@ -75,12 +87,18 @@ export default {
             // this.init();
         },
         playbackRate: function(rate){
+            if(!this.initialed){
+                return false;
+            }
             if(this.source && this.player.playbackRate){
                 this.player.playbackRate(rate);
             }
             
         },
         playBackwards: function(fps) {
+            if(!this.initialed){
+                return false;
+            }
             this.isRewind = true;
             this.pause();
 
@@ -92,7 +110,7 @@ export default {
                 if(video.currentTime() == 0){
                     clearInterval(interval);
                     video.pause();
-                }
+                    }
                 else {
                     var goto = video.currentTime() - (1/fps);
                     video.currentTime(goto);
@@ -102,29 +120,33 @@ export default {
         init: function(callback){
             var $this = this;
             var key = 'key'+$this.index;
-            if(this.source && document.getElementById(key)){
+            var elem = document.getElementById(key);
+            if(this.source && elem){
             // console.log(this.index);
-                videojs('key'+$this.index, {
+                let _v = videojs('key'+$this.index, {
                     bigPlayButton: false,
                     textTrackDisplay: false,
                     posterImage: true,
                     errorDisplay: false,
-                    controlBar: true,
-                    onload: function(){
-                        console.log('loaded');
-                    }
+                    controlBar: true
                 }, function () {
                     this.src({
                         src: $this.source
                     });
                     $this.player = this;
                     (callback||function(){})();
-                    console.log('this.player ready')
-                    $this.initialed = true;
+                    // console.log('this.player ready')
                 });
+                _v.on(elem, 'progress',function(){
+                    // console.log('video ready')
+                    $this.initialed = true;
+                },false);
             }
         },
         dispose: function(){
+            if(!this.initialed){
+                return false;
+            }
             try{
                 if(this.player.dispose){
                     this.player.dispose();
