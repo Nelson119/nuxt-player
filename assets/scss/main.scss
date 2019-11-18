@@ -297,8 +297,14 @@ body {
     &.selected{
       background: rgb(143, 143, 8);
       // color: yellow;
+      &.hover{
+        color:inherit;
+      }
     }
   }
+}
+.el-select-dropdown__wrap{
+  max-height: 70vh;
 }
 .el-select-dropdown{
   border: 0;
@@ -327,7 +333,7 @@ body {
 }
 .el-input__prefix{
   display: flex;
-  left: 30px;
+  left: 23px;
   img{
     align-self: center;
   }

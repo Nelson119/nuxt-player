@@ -101,7 +101,7 @@ export default {
     return {
       videos : [],
       forwardOption: [0.25,0.5,1,4,8,16],
-      rewindOption: [1,4,8,16],
+      rewindOption: [0.25, 0.5, 1,4,8,16],
       is16x9 : false,
       currentPlaybackRate: 1,
       rewindRate: 1,
