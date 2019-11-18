@@ -3,10 +3,10 @@
   <div class="Player">
 	  <!--上排按鈕-->
     <div class="Upper btn-group" role="group" aria-label="Button group with nested dropdown">
-      <button @click="setPageSize(1)" type="button" class="Flex1 btn btn-primary"><img src="img/1-1.png"/><span style="vertical-align: text-bottom;"> 1</span></button>
-      <button @click="setPageSize(4)" type="button" class="Flex1 btn btn-primary"><img src="img/1-4.png"/><span style="vertical-align: text-bottom;"> 4</span></button>
-      <button @click="setPageSize(9)" type="button" class="Flex1 btn btn-primary"><img src="img/1-9.png"/><span style="vertical-align: text-bottom;"> 9</span></button>
-      <button @click="setPageSize(16)" type="button" class="Flex1 btn btn-primary"><img src="img/1-16.png"/><span style="vertical-align: text-bottom;"> 16</span></button>
+      <button @click="setPageSize(1)" type="button" :class="[{'pausing':pageSize == 1},'Flex1 btn btn-primary']"><img src="img/1-1.png"/><span style="vertical-align: text-bottom;"> 1</span></button>
+      <button @click="setPageSize(4)" type="button" :class="[{'pausing':pageSize == 4},'Flex1 btn btn-primary']"><img src="img/1-4.png"/><span style="vertical-align: text-bottom;"> 4</span></button>
+      <button @click="setPageSize(9)" type="button" :class="[{'pausing':pageSize == 9},'Flex1 btn btn-primary']"><img src="img/1-9.png"/><span style="vertical-align: text-bottom;"> 9</span></button>
+      <button @click="setPageSize(16)" type="button" :class="[{'pausing':pageSize == 16},'Flex1 btn btn-primary']"><img src="img/1-16.png"/><span style="vertical-align: text-bottom;"> 16</span></button>
       <div class="Flex1 btn-group" role="group">
         <el-select v-model="currentPage" @change="pageIndexChange">
           <el-option v-for="index in totalPage" :label="'分頁'+index" :key="index" :value="index">分頁{{index}}</el-option>
@@ -35,7 +35,6 @@
       <button type="button" @click="pause" :class="[{'pausing':playerState=='pause'},'Flex1 NoBorder btn btn-primary']"><img src="img/pause.png"/></button>
       <button type="button" @click="stop" class="Flex1 NoBorder btn btn-primary"><img src="img/stop.png"/></button>
       <div class="Flex1 NoBorder btn-group" role="group">
-        <!-- <button id="btnGroupDrop3" @click="playbackRateForward" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/forward.png"/><span style="vertical-align: super;"> {{currentPlaybackRate}}X</span></button> -->
         <el-select v-model="currentPlaybackRate" @change="playbackRateChange">
           <template slot="prefix"><img class="prefix" :src="'img/forward.png'" /></template>
           <template slot="suffix">x</template>
@@ -43,7 +42,7 @@
         </el-select>
       </div>
       <button @click="capture" type="button" :class="[{'pausing':isCapturing},'Flex1 NoBorder btn btn-primary']"><img src="img/capture.png"/></button>
-	    <button @click="requestFullScreen" type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/fullscreen.png"/></button>
+	    <button @click="requestFullScreen" type="button" :class="[{'pausing':isFullscreen},'Flex1 NoBorder btn btn-primary']"><img src="img/fullscreen.png"/></button>
     </div>
   </div>
   <canvas id="canvas"></canvas>
@@ -102,7 +101,8 @@ export default {
       currentPage: 1,
       pageSize: 9,
       playerState: 'stop',
-      isCapturing: false
+      isCapturing: false,
+      isFullscreen: false
     }
   },
   mounted: function(){
@@ -244,6 +244,10 @@ export default {
       });
     },
     requestFullScreen: function(){
+      if(this.isFullscreen){
+        this.closeFullscreen();
+        return;
+      }
       let elem = document.body;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
@@ -254,6 +258,19 @@ export default {
       } else if (elem.msRequestFullscreen) { /* IE/Edge */
         elem.msRequestFullscreen();
       }
+      this.isFullscreen = true;
+    },
+    closeFullscreen: function () {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) { /* Firefox */
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE/Edge */
+        document.msExitFullscreen();
+      }
+      this.isFullscreen = false;
     },
     fakeVideoList: function(){
         var itemlist =[];
