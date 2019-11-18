@@ -1,5 +1,5 @@
 <template>
-<div class="Container" ref="fullScreenContainer">
+<div :class="[{'capturing':isCapturing},'Container']" ref="fullScreenContainer">
   <div class="Player">
 	  <!--上排按鈕-->
     <div class="Upper btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -31,8 +31,8 @@
       <div class="Flex1 NoBorder btn-group" role="group">
         <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" @click="setPlayTime"><img src="img/back2.png"/><span style="vertical-align: super;"> {{-backSeconds}}s</span></button>
       </div>
-      <button type="button" @click="play" class="Flex1 NoBorder btn btn-primary"><img src="img/play.png"/></button>
-      <button type="button" @click="pause" class="Flex1 NoBorder btn btn-primary"><img src="img/pause.png"/></button>
+      <button type="button" @click="play" :class="[{'playing':playerState=='play'},'Flex1 NoBorder btn btn-primary']"><img src="img/play.png"/></button>
+      <button type="button" @click="pause" :class="[{'pausing':playerState=='pause'},'Flex1 NoBorder btn btn-primary']"><img src="img/pause.png"/></button>
       <button type="button" @click="stop" class="Flex1 NoBorder btn btn-primary"><img src="img/stop.png"/></button>
       <div class="Flex1 NoBorder btn-group" role="group">
         <!-- <button id="btnGroupDrop3" @click="playbackRateForward" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/forward.png"/><span style="vertical-align: super;"> {{currentPlaybackRate}}X</span></button> -->
@@ -42,12 +42,13 @@
           <el-option v-for="(item, index) in forwardOption" :label="item+'X'" :key="index" :value="item">{{item}}X</el-option>
         </el-select>
       </div>
-      <button @click="capture" type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/capture.png"/></button>
+      <button @click="capture" type="button" :class="[{'pausing':isCapturing},'Flex1 NoBorder btn btn-primary']"><img src="img/capture.png"/></button>
 	    <button @click="requestFullScreen" type="button" class="Flex1 NoBorder btn btn-primary"><img src="img/fullscreen.png"/></button>
     </div>
   </div>
   <canvas id="canvas"></canvas>
   <!-- {{JSON.stringify(this.videos)}} -->
+  <!-- {{this.playerState}} -->
 </div>
 
 </template>
@@ -99,7 +100,9 @@ export default {
       currentPlaybackRate: 1,
       backSeconds: -3,
       currentPage: 1,
-      pageSize: 9
+      pageSize: 9,
+      playerState: 'stop',
+      isCapturing: false
     }
   },
   mounted: function(){
@@ -132,8 +135,10 @@ export default {
       for(var index in players){
         var player = players[index];
         // console.log(player.play)
-        if(player.play)
+        if(player.play){
           player.play();
+          this.playerState = 'play';
+        }
       }
     },
     pause: function(){
@@ -141,8 +146,11 @@ export default {
       for(var index in players){
         var player = players[index];
         // console.log(player.pause)
-        if(player.pause)
+        if(player.pause){
           player.pause();
+          this.playerState = 'pause';
+        }
+
       }
     },
     stop: function(){
@@ -152,6 +160,7 @@ export default {
         var player = players[index];
         player.stop();
       }
+      this.playerState = 'stop';
     },
     playbackRateChange: function(){
       var players = this.$refs.videoplayer;
@@ -176,6 +185,9 @@ export default {
     },
     capture: function(){
       // console.log('capture');
+      let wasPlaying = this.playerState == 'play'
+      this.isCapturing = true;
+      this.pause();
       var c = document.getElementById('canvas')
       let ctx = c.getContext('2d');
       let videos = document.querySelectorAll('video')
@@ -225,6 +237,10 @@ export default {
               v.parentNode.style = '';
           }
         }catch(e){}
+        this.isCapturing = false;
+        if(wasPlaying){
+          this.play();
+        }
       });
     },
     requestFullScreen: function(){
@@ -242,7 +258,7 @@ export default {
     fakeVideoList: function(){
         var itemlist =[];
         var samples = [
-          'video/20191015-140000.mp4',
+          'https://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
           'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
           // 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           // 'video/happyfit2.mp4'
