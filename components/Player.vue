@@ -29,25 +29,10 @@ export default {
     name: 'video-set',
     data() {
       return {
-        // playerOptions: {
-        //   // videojs and plugin options
-        //     muted: true,
-        //     crossOrigin: 'anonymous',
-        //     controlBar: {
-        //         timeDivider: false,
-        //         durationDisplay: false,
-        //         playButton: false
-        //     },
-        //     flash: { hls: { withCredentials: false }},
-        //     html5: { hls: { withCredentials: false }},
-        // //   poster: "path-to/static/images/surmon-5.jpg"
-        // }
         player: {},
         initialed: false,
-        // sourceCache: undefined,
       }
     },
-    // components:{VideoPlayer},
     props:['index','classnames', 'source','playbackrate','poster','title','time','filename','info','sources'],
     methods: {
         setPlayBackRate: (playbackRate) =>{
@@ -61,13 +46,6 @@ export default {
                 // console.log('to',this.player.currentTime());
             }
         },
-        // playerReadied(player) {
-        //     var hls = player.tech({ IWillNotUseThisInPlugins: true }).hls
-        //     player.tech_.hls.xhr.beforeRequest = function(options) {
-        //     // console.log(options)
-        //     return options
-        //     }
-        // },
         play: function(){
             if(this.source && this.player.play){
                 this.player.play();
@@ -186,6 +164,7 @@ export default {
 .VDO{
     opacity: 0.1;
     transition-duration: 0.2s;
+    transition-property: opcity;
     &[data-initialed=true]{
         opacity: inherit;
     }
