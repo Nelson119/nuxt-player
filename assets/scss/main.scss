@@ -257,8 +257,12 @@ body {
     height: auto;
     padding: 1rem 1.5rem;
     color: #fff;
-    &.selected,&.hover{
+    &.hover{
       background: #fff;
+      color:#000;
+    }
+    &.selected{
+      background: #cdb;
       color:#000;
     }
   }
@@ -277,6 +281,11 @@ body {
   
   .el-select{
     .el-input{
+      &.is-focus{
+        border: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+        outline: #40a2db;
+      }
       input{
         border: 0;
       }
