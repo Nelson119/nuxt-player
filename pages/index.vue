@@ -40,7 +40,7 @@
       <button type="button" @click="pause" :class="[{'pausing':playerState=='pause'},'Flex1 NoBorder btn btn-primary']"><img src="img/pause.png"/></button>
       <button type="button" @click="stop" class="Flex1 NoBorder btn btn-primary"><img src="img/stop.png"/></button>
       <div class="Flex1 NoBorder btn-group" role="group">
-        <el-select v-model="currentPlaybackRate" @change="playbackRateChange">
+        <el-select :class="{'playing':playerState=='play'}" v-model="currentPlaybackRate" @change="playbackRateChange">
           <template slot="prefix"><img class="prefix" :src="'img/forward.png'" /></template>
           <template slot="suffix">x</template>
           <el-option v-for="(item, index) in forwardOption" :label="item+'X'" :key="index" :value="item">{{item}}X</el-option>
