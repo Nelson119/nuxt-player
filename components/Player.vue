@@ -31,6 +31,8 @@ export default {
       return {
         player: {},
         initialed: false,
+        intervalRewind: 0,
+        isRewind: false
       }
     },
     props:['index','classnames', 'source','playbackrate','poster','title','time','filename','info','sources'],
@@ -47,11 +49,18 @@ export default {
             }
         },
         play: function(){
+            if(this.isRewind){
+                clearInterval(this.intervalRewind);
+            }
             if(this.source && this.player.play){
                 this.player.play();
             }
         },
         pause: function(){
+            if(this.isRewind){
+                clearInterval(this.intervalRewind);
+            }
+            clearInterval(this.intervalRewind);
             if(this.source && this.player.pause){
                 this.player.pause();
             }
@@ -71,6 +80,25 @@ export default {
             }
             
         },
+        playBackwards: function(fps) {
+            this.isRewind = true;
+            this.pause();
+
+            var video = this.player;
+            var interval = this.intervalRewind;
+
+            this.intervalRewind = setInterval(function() {
+                // console.log(video.currentTime())
+                if(video.currentTime() == 0){
+                    clearInterval(interval);
+                    video.pause();
+                }
+                else {
+                    var goto = video.currentTime() - (1/fps);
+                    video.currentTime(goto);
+                }
+            }, 1000 / 25);
+        },
         init: function(callback){
             var $this = this;
             var key = 'key'+$this.index;
@@ -81,7 +109,10 @@ export default {
                     textTrackDisplay: false,
                     posterImage: true,
                     errorDisplay: false,
-                    controlBar: true
+                    controlBar: true,
+                    onload: function(){
+                        console.log('loaded');
+                    }
                 }, function () {
                     this.src({
                         src: $this.source

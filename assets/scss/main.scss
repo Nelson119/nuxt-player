@@ -110,7 +110,18 @@ body {
 	width: 33.33%;
 }
 .VDOGrid .VDO25 {
-	width: 25%;
+  width: 25%;
+  
+}
+.VDOGrid .VDO33,.VDOGrid .VDO25 {
+  .FontXS {
+    font-size: 0.6em;
+  }
+  .Title,
+  .Info{
+    font-size: 0.8em;
+  }
+  
 }
 .VDOGrid .VDO .Title {
 	width: 100%;
@@ -336,7 +347,7 @@ body {
   width: 100%;
   height: 100%;
 }
-
+.el-select.playing,
 .btn-primary.playing,
 .btn-primary.pausing{
   background: rgb(143, 143, 8);

@@ -29,7 +29,12 @@
 	  <!--下排按鈕-->
     <div class="Lower btn-group" role="group" aria-label="Button group with nested dropdown">
       <div class="Flex1 NoBorder btn-group" role="group">
-        <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" @click="setPlayTime"><img src="img/back2.png"/><span style="vertical-align: super;"> {{-backSeconds}}s</span></button>
+        <!-- <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" @click="playBackwards"><img src="img/back.png"/><span style="vertical-align: super;"> {{-backSeconds}}x</span></button> -->
+        <el-select :class="{'playing':playerState=='rewind'}" v-model="rewindRate" @focus="rewindRateChange" @change="rewindRateChange">
+          <template slot="prefix"><img class="prefix" :src="'img/back.png'" /></template>
+          <template slot="suffix">x</template>
+          <el-option v-for="(item, index) in rewindOption" :label="item+'X'" :key="index" :value="item">{{item}}X</el-option>
+        </el-select>
       </div>
       <button type="button" @click="play" :class="[{'playing':playerState=='play'},'Flex1 NoBorder btn btn-primary']"><img src="img/play.png"/></button>
       <button type="button" @click="pause" :class="[{'pausing':playerState=='pause'},'Flex1 NoBorder btn btn-primary']"><img src="img/pause.png"/></button>
@@ -90,14 +95,16 @@ export default {
   },
   mounted() {
     console.log(this.$route.query);
+    setPlayTime(10000);
   },
   data: () => {
     return {
       videos : [],
       forwardOption: [0.25,0.5,1,4,8,16],
+      rewindOption: [1,4,8,16],
       is16x9 : false,
       currentPlaybackRate: 1,
-      backSeconds: -3,
+      rewindRate: 1,
       currentPage: 1,
       pageSize: 9,
       playerState: 'stop',
@@ -155,12 +162,15 @@ export default {
     },
     stop: function(){
       // console.log('stop');
-      var players = this.$refs.videoplayer;
-      for(var index in players){
-        var player = players[index];
-        player.stop();
-      }
-      this.playerState = 'stop';
+      try{
+        var players = this.$refs.videoplayer;
+        for(var index in players){
+          var player = players[index];
+          player.stop();
+        }
+        
+        this.playerState = 'stop';
+      }catch(e){}
     },
     playbackRateChange: function(){
       var players = this.$refs.videoplayer;
@@ -168,6 +178,16 @@ export default {
         var player = players[index];
         if(player.playbackRate){
           player.playbackRate(this.currentPlaybackRate);
+        }
+      }
+    },
+    rewindRateChange: function(){
+      this.playerState= 'rewind';
+      var players = this.$refs.videoplayer;
+      for(var index in players){
+        var player = players[index];
+        if(player.playbackRate){
+          player.playBackwards(25/this.rewindRate);
         }
       }
     },
@@ -275,7 +295,8 @@ export default {
     fakeVideoList: function(){
         var itemlist =[];
         var samples = [
-          'https://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
+          'video/20191015-140000.mp4',
+          // 'https://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
           'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
           // 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           // 'video/happyfit2.mp4'
