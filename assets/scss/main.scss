@@ -282,6 +282,9 @@ body {
     }
 
   }
+  .el-input__inner:focus{
+    border-color: #5cb8ee;
+  }
 }
 .el-select-dropdown__list{
   background: #40a2db;
@@ -330,6 +333,7 @@ body {
       }
     }
   }
+  
 }
 .el-input__prefix{
   display: flex;
