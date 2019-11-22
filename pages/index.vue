@@ -212,8 +212,9 @@ export default {
       let ctx = c.getContext('2d');
       let videos = document.querySelectorAll('video')
       let w, h
+      var captureNum = 0;
       for (let i = 0, len = videos.length; i < len; i++) {
-          const v = videos[i]
+          const v = videos[i];
           // if (!v.src) continue // no video here
           try {
               w = v.videoWidth
@@ -232,36 +233,41 @@ export default {
               continue
           }
       }
+      var tick = new Date()*1;
+      var players = this.$refs.videoplayer;
+      for(var idx in players){
+        console.log(players[idx].$el);
+        html2canvas(players[idx].$el,{allowTaint:true}).then(canvas => { 
 
-      html2canvas(this.$refs.capture,{allowTaint:true}).then(canvas => { 
-
-        if (canvas.msToBlob) { //for IE
-          let elem = this.$refs.capture;
-          canvas.id = 'capture';
-          // elem.appendChild(canvas);
-          var blob = canvas.msToBlob();
-          window.navigator.msSaveBlob(blob, 'capture-'+new Date*1+'.png');
-        }else{
-          let link = document.createElement('a');
-          // link.target = '_blank';
-          link.href = canvas.toDataURL();
-          // console.log(link);
-          link.setAttribute('download', 'capture-'+new Date*1+'.png');
-          link.style.display = 'none';
-          document.body.appendChild(link);
-          link.click();
-        }
-        try{
-          for (let i = 0, len = videos.length; i < len; i++) {
-              const v = videos[i]
-              v.parentNode.style = '';
+          if (canvas.msToBlob) { //for IE
+            let elem = this.$refs.capture;
+            canvas.id = 'capture';
+            // elem.appendChild(canvas);
+            var blob = canvas.msToBlob();
+            window.navigator.msSaveBlob(blob, 'capture-'+tick+'-'+idx+'.png');
+          }else{
+            let link = document.createElement('a');
+            // link.target = '_blank';
+            link.href = canvas.toDataURL();
+            // console.log(link);
+            link.setAttribute('download', 'capture-'+tick+'-'+idx+'.png');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
           }
-        }catch(e){}
-        this.isCapturing = false;
-        if(wasPlaying){
-          this.play();
-        }
-      });
+          try{
+            v.parentNode.style = '';
+          }catch(e){}
+          captureNum++;
+          if(captureNum === videos.length){
+            this.isCapturing = false;
+            if(wasPlaying){
+              this.play();
+            }
+          }
+        });
+      }
+
     },
     requestFullScreen: function(){
       if(this.isFullscreen){
