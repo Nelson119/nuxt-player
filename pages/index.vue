@@ -321,11 +321,11 @@ export default {
           var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
           var item = {
             title: "(租10801)力行路與中正五街口-4.中正五街往永康街方向(車)",
-            time: "10/17/2019 07:00:56",
-            info: "tyu-ido1-20190917-090249",
+            time: "20190917-090249",
+            info: "tyu-ido1",
             filename: "LL40202702",
-            index: i,
-            poster: "img/16-9.jpg",
+            // index: i,
+            // poster: "img/16-9.jpg", 
             source: samples[rand]
           };
           item.title=item.title+(i+1);

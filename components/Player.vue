@@ -2,8 +2,7 @@
     <div :data-initialed="initialed">
         <div class="Title">{{this.title}}</div>
         <div class="Info">
-            <span>{{info}}</span><br>
-            <span class="FontXS">{{time}}</span><br>
+            <span>{{info}} - {{time}}</span><br>
             <span class="FontXS">{{filename}}</span>
         </div>
         <div class="Slice">
