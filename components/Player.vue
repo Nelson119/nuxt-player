@@ -107,10 +107,10 @@ export default {
 
             this.intervalRewind = setInterval(function() {
                 // console.log(video.currentTime())
-                if(video.currentTime() == 0){
+                if(video && video.currentTime && video.currentTime() == 0){
                     clearInterval(interval);
                     video.pause();
-                    }
+                }
                 else {
                     var goto = video.currentTime() - (1/fps);
                     video.currentTime(goto);

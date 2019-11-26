@@ -320,7 +320,7 @@ export default {
         for(var i=0;i<35;i++){
           var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
           var item = {
-            title: "影像串流名稱影像串流名稱影像串流名稱影像串流名稱",
+            title: "(租10801)力行路與中正五街口-4.中正五街往永康街方向(車)",
             time: "10/17/2019 07:00:56",
             info: "tyu-ido1-20190917-090249",
             filename: "LL40202702",
