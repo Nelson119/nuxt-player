@@ -1,5 +1,5 @@
 <template>
-    <div :class="classnames" :data-initialed="initialed">
+    <div :data-initialed="initialed">
         <div class="Title">{{this.title}}</div>
         <div class="Info">
             <span>{{info}}</span><br>
@@ -214,7 +214,7 @@ export default {
         display: none;
     }
 }
-.VDO{
+.VDO >div{
     opacity: 0.1;
     transition-duration: 0.2s;
     transition-property: opcity;

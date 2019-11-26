@@ -20,16 +20,17 @@
     </div>
 	  <!--主影片區-->
 	  <div :class="[{'ratio4x3':is16x9},'VDOGrid']" ref="capture">
-      <VideoSet :ref="'videoplayer'" :source="item.source" v-for="(item, index) in pagedVideoList" :key="index" :classnames="['VDO', pagedClassName]" :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
-         :poster="item.poster" :index="index">
-      </VideoSet>
+      <div :data-serial="item.serial" :class="['VDO', pagedClassName]" @click="refTo(item.serial)"  v-for="(item, index) in pagedVideoList" :key="index">
+        <VideoSet :ref="'videoplayer'" :source="item.source"  :title="item.title" :time="item.time" :info="item.info" :filename="item.filename"
+          :poster="item.poster" :index="index">
+        </VideoSet>
+      </div>
     </div>
     <div class="clearfix"></div>
 	  
 	  <!--下排按鈕-->
     <div class="Lower btn-group" role="group" aria-label="Button group with nested dropdown">
       <div class="Flex1 NoBorder btn-group" role="group">
-        <!-- <button id="btnGroupDrop2" type="button" class="Dropdown NoBorder btn btn-primary dropdown-toggle" @click="playBackwards"><img src="img/back.png"/><span style="vertical-align: super;"> {{-backSeconds}}x</span></button> -->
         <el-select :class="{'playing':playerState=='rewind'}" v-model="rewindRate" @focus="rewindRateChange" @change="rewindRateChange">
           <template slot="prefix"><img class="prefix" :src="'img/back.png'" /></template>
           <template slot="suffix">x</template>
@@ -53,6 +54,7 @@
   <canvas id="canvas"></canvas>
   <!-- {{JSON.stringify(this.videos)}} -->
   <!-- {{this.playerState}} -->
+  <!-- {{new moment()}} -->
 </div>
 
 </template>
@@ -60,6 +62,9 @@
 <script>
 import VideoSet from '~/components/Player.vue'
 import html2canvas from 'html2canvas'
+import moment from 'moment'
+// import Vue from 'vue'
+// Vue.use(moment);
 const axios = require('axios');
 
 export default {
@@ -93,10 +98,6 @@ export default {
       return className;
     }
   },
-  mounted() {
-    console.log(this.$route.query);
-    setPlayTime(10000);
-  },
   data: () => {
     return {
       videos : [],
@@ -114,6 +115,7 @@ export default {
   },
   mounted: function(){
     // console.log(this.$route.query)
+    // console.log()
     var _this = this;
     if(this.$route.query.json){
       axios.get(this.$route.query.json).then((res) =>{
@@ -124,9 +126,15 @@ export default {
         console.log(error);
       })
       .finally(function () {
+        for(var i in _this.videos){
+          _this.videos[i].serial = i*1+1;
+        }
       });
     }else{
       this.fakeVideoList();
+      for(var i in _this.videos){
+        _this.videos[i].serial = i*1+1;
+      }
     }
     // console.log(JSON.stringify(this.videos));
   },
@@ -233,24 +241,26 @@ export default {
               continue
           }
       }
-      var tick = new Date()*1;
+      var tick = new moment().format('YYYYMMDDHHmmssSSS');
       var players = this.$refs.videoplayer;
       for(var idx in players){
-        console.log(players[idx].$el);
-        html2canvas(players[idx].$el,{allowTaint:true}).then(canvas => { 
+        let plr = players[idx];
+        // console.log(plr);
+        html2canvas(plr.$el,{allowTaint:true}).then(canvas => { 
+          var filename = plr.title + '-'+tick+'.png';
 
           if (canvas.msToBlob) { //for IE
             let elem = this.$refs.capture;
             canvas.id = 'capture';
             // elem.appendChild(canvas);
             var blob = canvas.msToBlob();
-            window.navigator.msSaveBlob(blob, 'capture-'+tick+'-'+idx+'.png');
+            window.navigator.msSaveBlob(blob, filename);
           }else{
             let link = document.createElement('a');
             // link.target = '_blank';
             link.href = canvas.toDataURL();
             // console.log(link);
-            link.setAttribute('download', 'capture-'+tick+'-'+idx+'.png');
+            link.setAttribute('download', filename);
             link.style.display = 'none';
             document.body.appendChild(link);
             link.click();
@@ -259,7 +269,7 @@ export default {
             v.parentNode.style = '';
           }catch(e){}
           captureNum++;
-          if(captureNum === videos.length){
+          if(captureNum === players.length){
             this.isCapturing = false;
             if(wasPlaying){
               this.play();
@@ -307,7 +317,7 @@ export default {
           // 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           // 'video/happyfit2.mp4'
         ];
-        for(var i=0;i<=113;i++){
+        for(var i=0;i<35;i++){
           var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
           var item = {
             title: "影像串流名稱影像串流名稱影像串流名稱影像串流名稱",
@@ -331,6 +341,12 @@ export default {
           player.setPlayTime(this.backSeconds);
         }
       }
+    },
+    refTo: function(to){
+      // console.log('to', to)
+      this.pageSize = 1;
+      this.currentPage = to;
+      this.pause();
     }
   }
 }
