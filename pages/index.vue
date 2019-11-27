@@ -313,7 +313,7 @@ export default {
         var samples = [
           'video/20191015-140000.mp4',
           // 'https://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
-          'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+          // 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
           // 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           // 'video/happyfit2.mp4'
         ];
