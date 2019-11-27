@@ -152,6 +152,9 @@ export default {
         // console.log(player.play)
         if(player.play){
           player.play();
+          if(player.playbackRate){
+            player.playbackRate(this.currentPlaybackRate);
+          }
           this.playerState = 'play';
         }
       }
