@@ -315,6 +315,7 @@ export default {
         var itemlist =[];
         var samples = [
           'video/2019000.mp4',
+          'http://172.105.121.239/videos/mr_mrs_gao_1080p.mp4',
           //'video/20191015-140000.mp4',
           // 'https://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
           // 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
