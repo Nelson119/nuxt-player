@@ -107,7 +107,7 @@ export default {
       currentPlaybackRate: 1,
       rewindRate: 1,
       currentPage: 1,
-      pageSize: 9,
+      pageSize: 4,
       playerState: 'stop',
       isCapturing: false,
       isFullscreen: false
