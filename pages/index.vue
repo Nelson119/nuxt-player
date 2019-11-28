@@ -152,6 +152,9 @@ export default {
         // console.log(player.play)
         if(player.play){
           player.play();
+          if(player.playbackRate){
+            player.playbackRate(this.currentPlaybackRate);
+          }
           this.playerState = 'play';
         }
       }
@@ -233,7 +236,7 @@ export default {
               ctx.drawImage(v, 0, 0, w, h)
               // console.log(`${canvas.toDataURL()}`);
               var back =  `url(${c.toDataURL()})`;
-			  v.parentNode.style.background = back+'center center/ contain no-repeat';
+              v.parentNode.style.background = back+'center center/ contain no-repeat #000';
               // v.class="hide"; 
               ctx.clearRect(0, 0, w, h); // clean the canvas
               // break;
