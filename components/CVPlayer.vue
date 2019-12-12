@@ -6,8 +6,8 @@
             <span class="FontXS">{{filename}}</span>
         </div>
         <div class="Slice">
-            <div v-if="source">
-                <object id="CVPlayer" name="CVPlayer" align="middle" BORDER="0" height="600" width="768" classid="clsid:1D815D08-F659-4c89-B054-9CAE14928340"></object>
+            <div v-if="source" ref="container">
+                <object ref="cvp" @load="init" id="CVPlayer" name="CVPlayer" align="middle" BORDER="0" height="600" width="768" classid="clsid:1D815D08-F659-4c89-B054-9CAE14928340"></object>
             </div>
         </div>
     </div>
@@ -29,140 +29,16 @@ export default {
     },
     props:['index','classnames', 'source','playbackrate','poster','title','time','filename','info','sources'],
     methods: {
+		 
         SetPlayerNumber: function (intSplit,intWidth,intHeight)
         {
-            this.CVPlayer.SetPlayerNumber(intSplit,intWidth,intHeight);
+            try{
+                this.CVPlayer.SetPlayerNumber(intSplit, intWidth, intHeight);
+            }catch(e){
+                console.log('this.CVPlayer.SetPlayerNumber',e);
+            }
         },
-        StartToPlay:function ()
-        {
-            this.CVPlayer.StartToPlay();
-        },
-        StartToPlayByIndex:function (intIndex,strVideo,strTitle)
-        {
-            this.CVPlayer.StartToPlayByIndex(intIndex,strVideo, strTitle);
-        },
-        SetPlaylist: function (strVideo,strTitle)
-        {
-            this.CVPlayer.SetPlaylist(strVideo, strTitle);
-        },
-        doStartPlay: function ()
-        {
-            this.CVPlayer.SingleStartToPlay();
-        },   
-        AllStartPlay: function ()
-        {
-            this.CVPlayer.AllStartToPlay();
-        },
-        StartToLoopPlay: function ()
-        {
-            this.CVPlayer.StartToLoopPlay();	
-        },
-        SetLoopInterval: function (intSec)
-        {
-            this.CVPlayer.SetLoopInterval(intSec);	
-        },
-        StopToLoopPlay: function ()
-        {
-            this.CVPlayer.StopToLoopPlay();
-        },
-        SetFullScreen:function ()
-        {
-            setTimeout("this.CVPlayer.SetFullScreen()" ,100);
-        },
-        SetBacktoOriginalSize: function ()
-        {
-            this.CVPlayer.SetBacktoOriginalSize();
-        },
-        SetTogglePlayPause: function ()
-        {
-            this.CVPlayer.TogglePlayPause();
-        },
-        PauseToPlay: function ()
-        {
-            this.CVPlayer.PauseToPlay();
-        },
-        StopToPlay: function ()
-        {
-            this.CVPlayer.StopToPlay();
-        },
-        AllPauseToPlay: function ()
-        {
-            this.CVPlayer.AllPauseToPlay();
-        },
-        AllStopToPlay: function ()
-        {
-            this.CVPlayer.AllStopToPlay();
-        },
-        TakeSnapshot: function ()
-        {
-            this.CVPlayer.TakeSnapShot(0,0);
-        },
-        BackToOriginalSize: function ()
-        {
-            this.CVPlayer.SetBacktoOriginalSize();
-        },
-        SetPlayerRewind: function ()
-        {
-            this.CVPlayer.SetRewind();
-        },
-        StartToRecord: function ()
-        {
-            this.CVPlayer.StartToRecord();
-        },
-        StopToRecord: function ()
-        {
-            this.CVPlayer.StopToRecord();
-        },
-        SetGeneralSetting: function ()
-        {
-            this.CVPlayer.SetGeneralSetting();
-        },
-        GotoSnapshotFolder: function ()
-        {
-            this.CVPlayer.GotoSnapshotFolder();
-        },
-        GotoRecordFolder: function ()
-        {
-            this.CVPlayer.GotoRecordFolder();
-        },
-        SetRewind: function (rate)
-        {
-            this.CVPlayer.SetRewind(rate);
-        },
-        SetFFW: function (rate)
-        {
-            this.CVPlayer.SetFFW(rate);
-        },
-        ForwardFramebyFrame: function ()
-        {
-            this.CVPlayer.ForwardFramebyFrame();
-        },
-        RewindFramebyFrame: function ()
-        {
-            this.CVPlayer.RewindFramebyFrame();
-        },
-        GetPanelIndex: function ()
-        {
-        	var PIndex = "";
-        	if(this.CVPlayer)
-        	PIndex = this.CVPlayer.GetPanelIndex();
-        	return PIndex;
-        },
-        GetPanelStatus: function ()
-        {
-        	var PStatus = "";
-        	if(this.CVPlayer)
-        	PStatus = this.CVPlayer.GetPanelStatus();
-        	return PStatus;
-        },
-        GetVersion: function ()
-        {
-        	var sreVersion = "";
-        	if(this.CVPlayer)
-        	sreVersion = this.CVPlayer.ReportCurrentVersion();
-        	return sreVersion;
-        },
-        IsCVPlayer: function ( )
+        IsCVPlayer: function ()
         {
             try{
                 var objDownload = new ActiveXObject("Butterfly.UserControl1");
@@ -173,30 +49,68 @@ export default {
                     //alert("物件不存在");
                     return "";
             }
+        },
+
+        StopToPlay: function () {
+        
+        },
+		SetPlaylist:function (strVideo,strTitle)
+        {
+            try{
+                this.CVPlayer.SetPlaylist(strVideo, strTitle);
+            }catch(e){
+                console.log(e)
+            }
+        },
+        SetSize: function ()
+        {
+        },
+        play: function(){
+            console.log('play')
+            var $this = this;
+                    try{
+                        $this.CVPlayer = $this.$refs.cvp;
+                        $this.container = $this.$refs.container;
+                        window.CVPlayer = $this.CVPlayer;
+                        // $this.CVPlayer.width = $this.container.offsetWidth;
+                        // $this.CVPlayer.height = $this.container.offsetHeight;
+                        console.log($this.source);
+                        $this.SetPlaylist($this.source,$this.title);
+                        $this.SetPlayerNumber(1,$this.CVPlayer.width,$this.CVPlayer.height);
+                    }catch(e){
+                        console.log(e);
+                    }
+            // try {
+            //     this.CVPlayer.SingleStartToPlay();
+            // }
+            // catch (e)
+            // { 
+            //     console.log('this.CVPlayer.SingleStartToPlay',e)
+            // }
+        },
+        init: function(){
+            var $this = this;
+            var wait = setInterval(function(){
+               var ret = $this.IsCVPlayer();
+               if(ret){
+                    clearInterval(wait);
+                }
+            },1000);
         }
-		   
-           
+      
     },
     mounted: function () {
-        var $this = this;
-            this.init(() => {
-                // console.log($this.player);
-                if($this.player && $this.player.src){
-                    $this.stop();
-                    $this.player.src({
-                        src: $this.source
-                    });
-                }
-            });
+        console.log('mounted');
+        this.init();
     } ,
     destroyed: function(){
-        this.dispose();
+        // this.dispose();
     },
     updated: function(){
-        if(!this.player || !this.player.src){
+        // if(!this.player || !this.player.src){
             // console.log('init value')
-            this.init();
-        }
+            // this.init();
+        // }
     },
     beforeUpdate:function(){
         // if(this.player && this.player.src){
@@ -205,20 +119,7 @@ export default {
     },
     watch: {
         source: function(value){
-            if(!value){
-                return;
-            }
-            // console.log('value',value)
-            var $this = this;
-            if(!this.player || !this.player.src){
-                // console.log('init value')
-                this.init();
-            }else{
-                $this.stop();
-                $this.player.src({
-                    src: $this.source
-                });
-            }
+            // this.SetPlaylist(this.source,this.title);
         }
     }
 }
@@ -226,7 +127,7 @@ export default {
 <style lang="scss">
 .VDOGrid{
     position: relative;
-    .video-player,.video-js, video{
+    .video-player,.video-js, video, object{
         width: 100%;
         height: 100%;
         position: absolute;

@@ -55,12 +55,14 @@
   <!-- {{JSON.stringify(this.videos)}} -->
   <!-- {{this.playerState}} -->
   <!-- {{new moment()}} -->
+        <!-- <object name="Downloadocx" id="Downloadocx" codebase="http://vrs.hinet.net/Download/DL.CAB" classid="clsid:EF87C28D-24AA-4830-8442-1BBAD949B808"
+        width="0" height="0" type="application/x-itst-activex"></object> -->
 </div>
 
 </template>
 
 <script>
-import VideoSet from '~/components/Player.vue'
+import VideoSet from '~/components/CVPlayer.vue'
 import html2canvas from 'html2canvas'
 import moment from 'moment'
 // import Vue from 'vue'
@@ -107,7 +109,7 @@ export default {
       currentPlaybackRate: 1,
       rewindRate: 1,
       currentPage: 1,
-      pageSize: 9,
+      pageSize: 1,
       playerState: 'stop',
       isCapturing: false,
       isFullscreen: false
@@ -314,13 +316,13 @@ export default {
     fakeVideoList: function(){
         var itemlist =[];
         var samples = [
-          'video/20191015-140000.mp4',
-          // 'https://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
+          'http://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',
+          // 'http://videodd.flyelephant.com.tw/video.mp4',
           // 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
           // 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
           // 'video/happyfit2.mp4'
         ];
-        for(var i=0;i<35;i++){
+        for(var i=0;i<16;i++){
           var rand = Math.floor(new Date * Math.random() * 1000 % samples.length);
           var item = {
             title: "(租10801)力行路與中正五街口-4.中正五街往永康街方向(車)",
