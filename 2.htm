@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=big5">
+		<title>CHT CVPlayer</title>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.objstyle{
+	border-style:solid; border-color:#ff0000;
+}
+-->
+</style>
+
+</head>
+<body>
+    <form name="form1" action="" >
+    <div>
+	<input type="hidden" name="IsAuto" value="0" />
+	<table border='0' cellpadding='0' cellspacing='0' width="100%">
+  <tr><td align="center">
+      <div id="tbar" style="text-align:center;">
+      	���D:<input type="text" name="sourcetitle" value="title">
+      	��}:<input type="text" name="sourceurl" value="http://nelson119.github.io/nuxt-player/video/20191015-140000.mp4">
+        <input type="button" value="SetPlaylist" name="setlist" onclick="SetPlaylist('http://nelson119.github.io/nuxt-player/video/20191015-140000.mp4',sourcetitle.value);SetSize();">
+        <br>
+        �e���G
+        <select name="panelnum" onchange="SetSize();">
+        	<option value="1" selected>1 </option>
+        	<option value="4" >4 </option>
+        	<option value="9">9 </option>
+        	<option value="16">16</option>
+        </select>
+        <input type="button" value="��" name="btnStartPlay" onclick="doStartPlay();" title="����" />
+        <input type="button" value="||" name="btnPause" onclick="PauseToPlay();" title="�Ȱ�" />
+        <input type="button" value="��" name="btnStop" onclick="StopToPlay();" title="����" />
+        <input type="button" value="��" name="btnStartRecord" onclick="StartToRecord();" title="���v" />
+        <input type="button" value="��" name="btnStopRecord" onclick="StopToRecord();" title="������v" />
+        
+        |        
+        <input type="button" value="����" name="btnStartLoopPlay" onclick="SetAutoPlay();" title="�۰ʽ���" />
+        <input type="text" value=20 name="intsec" size=2 maxlength=3>
+        |        
+        <input type="button" value=">>" name="btnStartPlay" onclick="AllStartPlay();" title="��������" />
+        <input type="button" value="||" name="btnPause" onclick="AllPauseToPlay();" title="�����Ȱ�" />
+        <input type="button" value="��" name="btnStop" onclick="AllStopToPlay();" title="��������" />
+        | 
+        �k����G
+        <input type="button" value="��" name="btnMenu" onclick="EnableMenu(false)" />
+        <input type="button" value="�}" name="btnMenu" onclick="EnableMenu(true)" />        
+        ���D�G
+        <input type="button" value="��" name="btnTitle" onclick="ShowTitle(false)" />
+        <input type="button" value="�}" name="btnTitle" onclick="ShowTitle(true)" />        
+        
+        <br>
+        <input type="button" value="�ַ�" name="btnSnapshot" onclick="TakeSnapshot();" />
+        <input type="button" value="��j" name="btnScreen" onclick="SetZoom();" />
+        <input type="button" value="�]�w" name="GeneralSetting" onclick="SetGeneralSetting();" />
+        <input type="button" value="�ؿ�" name="btngoto1" onclick="GotoSnapshotFolder();" />
+        <input type="button" value="����" name="btnClose" onclick="window.close();" />
+        
+        �����G       
+        <select name="CutPage" onchange="gotoPage(this.value);">
+        </select>        
+
+        <input type="button" value="����" name="btnVersion" onclick="alert(GetVersion())" />
+        <input type="button" value="Index" name="btnIndex" onclick="alert(GetPanelIndex())" />
+        
+        <input type="button" value="����" name="btnSetRewind" onclick="SetRewind(2)" />
+        <input type="button" value="����" name="btnSetFFW" onclick="SetFFW(2)" />
+        <input type="button" value="����" name="btnObject" onclick="alert(IsCVPlayer())" />
+        
+        <input type="button" value="������" name="btnFFF" onclick="ForwardFramebyFrame()" />
+        <input type="button" value="������" name="btnBBB" onclick="RewindFramebyFrame()" />
+        <input type="button" value="�ƥ�5��" name="btnEvent" onclick="SetWarning(GetPanelIndex(),5)" />
+        <input type="button" value="������" name="btnSFF" onclick="ForwardFramebyFrame()" />
+        <input type="button" value="���A" name="btnStat" onclick="alert(GetPanelStatus());" />
+        <input type="button" value="�~��" name="btnStat" onclick="SetWarning(1,10);" />
+        
+        <input type="button" name="cmrate" class="SButton" value="x16" onclick="SetFFW(16)" />
+        
+        
+   
+        </div>
+      </td> 
+  </tr>
+
+  <tr>
+      <td align="center">
+        <script type="text/javascript">
+
+                if (navigator.userAgent.indexOf('Firefox') >= 0)
+                {
+                  document.write('<object id="CVPlayer" TYPE="application/x-itst-activex"  ALIGN="middle" BORDER="0" HEIGHT="600" WIDTH="768" clsid="{1D815D08-F659-4c89-B054-9CAE14928340}"></object>\n');                       
+                }
+                else
+                {
+                  document.write('<object id="CVPlayer" name="CVPlayer" align="middle" BORDER="0" height="600" width="768" classid="clsid:1D815D08-F659-4c89-B054-9CAE14928340"></object>\n');
+                }
+    
+        //http://172.105.121.239/videos/mr_mrs_gao_1080p.mp4
+        </script>
+      </td>
+   </tr>     
+	</table>    
+    </div>
+    </form>
+<script type="text/javascript" src="js/cvplayer.js"></script>
+</body>
+</html>

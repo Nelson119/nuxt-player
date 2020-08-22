@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=big5">
+		<title>CHT CVPlayer</title>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.objstyle{
+	border-style:solid; border-color:#ff0000;
+}
+-->
+</style>
+
+</head>
+<body>
+    <form name="form1" action="" >
+    <div>
+	<input type="hidden" name="IsAuto" value="0" />
+	<table border='0' cellpadding='0' cellspacing='0' width="100%">
+  <tr><td align="center">
+      <div id="tbar" style="text-align:center;">
+      	標題:<input type="text" name="sourcetitle" value="title">
+      	位址:<input type="text" name="sourceurl" value="http://videodd.flyelephant.com.tw/video.mp4">
+        <input type="button" value="SetPlaylist" name="setlist" onclick="SetPlaylist(sourceurl.value,sourcetitle.value);SetSize();">
+        <br>
+        畫面：
+        <select name="panelnum" onchange="SetSize();">
+        	<option value="1" selected>1 </option>
+        	<option value="4" >4 </option>
+        	<option value="9">9 </option>
+        	<option value="16">16</option>
+        </select>
+        <input type="button" value="＞" name="btnStartPlay" onclick="doStartPlay();" title="播放" />
+        <input type="button" value="||" name="btnPause" onclick="PauseToPlay();" title="暫停" />
+        <input type="button" value="■" name="btnStop" onclick="StopToPlay();" title="停止" />
+        <input type="button" value="●" name="btnStartRecord" onclick="StartToRecord();" title="錄影" />
+        <input type="button" value="□" name="btnStopRecord" onclick="StopToRecord();" title="停止錄影" />
+        
+        |        
+        <input type="button" value="輪播" name="btnStartLoopPlay" onclick="SetAutoPlay();" title="自動輪播" />
+        <input type="text" value=20 name="intsec" size=2 maxlength=3>
+        |        
+        <input type="button" value=">>" name="btnStartPlay" onclick="AllStartPlay();" title="全部播放" />
+        <input type="button" value="||" name="btnPause" onclick="AllPauseToPlay();" title="全部暫停" />
+        <input type="button" value="■" name="btnStop" onclick="AllStopToPlay();" title="全部停止" />
+        | 
+        右鍵選單：
+        <input type="button" value="關" name="btnMenu" onclick="EnableMenu(false)" />
+        <input type="button" value="開" name="btnMenu" onclick="EnableMenu(true)" />        
+        標題：
+        <input type="button" value="關" name="btnTitle" onclick="ShowTitle(false)" />
+        <input type="button" value="開" name="btnTitle" onclick="ShowTitle(true)" />        
+        
+        <br>
+        <input type="button" value="快照" name="btnSnapshot" onclick="TakeSnapshot();" />
+        <input type="button" value="放大" name="btnScreen" onclick="SetZoom();" />
+        <input type="button" value="設定" name="GeneralSetting" onclick="SetGeneralSetting();" />
+        <input type="button" value="目錄" name="btngoto1" onclick="GotoSnapshotFolder();" />
+        <input type="button" value="關閉" name="btnClose" onclick="window.close();" />
+        
+        分頁：       
+        <select name="CutPage" onchange="gotoPage(this.value);">
+        </select>        
+
+        <input type="button" value="版本" name="btnVersion" onclick="alert(GetVersion())" />
+        <input type="button" value="Index" name="btnIndex" onclick="alert(GetPanelIndex())" />
+        
+        <input type="button" value="倒轉" name="btnSetRewind" onclick="SetRewind(2)" />
+        <input type="button" value="快轉" name="btnSetFFW" onclick="SetFFW(2)" />
+        <input type="button" value="物件" name="btnObject" onclick="alert(IsCVPlayer())" />
+        
+        <input type="button" value="單格快轉" name="btnFFF" onclick="ForwardFramebyFrame()" />
+        <input type="button" value="單格倒轉" name="btnBBB" onclick="RewindFramebyFrame()" />
+        <input type="button" value="事件5秒" name="btnEvent" onclick="SetWarning(GetPanelIndex(),5)" />
+        <input type="button" value="單格快轉" name="btnSFF" onclick="ForwardFramebyFrame()" />
+        <input type="button" value="狀態" name="btnStat" onclick="alert(GetPanelStatus());" />
+        <input type="button" value="外框" name="btnStat" onclick="SetWarning(1,10);" />
+                
+   
+        </div>
+      </td> 
+  </tr>
+
+  <tr>
+      <td align="center">
+        <script type="text/javascript">
+
+                if (navigator.userAgent.indexOf('Firefox') >= 0)
+                {
+                  document.write('<object id="CVPlayer" TYPE="application/x-itst-activex"  ALIGN="middle" BORDER="0" HEIGHT="600" WIDTH="768" clsid="{1D815D08-F659-4c89-B054-9CAE14928340}"></object>\n');                       
+                }
+                else
+                {
+                  document.write('<object id="CVPlayer" name="CVPlayer" align="middle" BORDER="0" height="600" width="768" classid="clsid:1D815D08-F659-4c89-B054-9CAE14928340"></object>\n');
+                }
+    
+        //http://172.105.121.239/videos/mr_mrs_gao_1080p.mp4
+        </script>
+      </td>
+   </tr>     
+	</table>    
+    </div>
+    </form>
+<script type="text/javascript" src="js/cvplayer.js"></script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	歷史影像調閱
+</title><link href="../../CSS/Style.css" type="text/css" rel="STYLESHEET" />
+    <script type="text/javascript" src="../../js/cvplayer.js"></script>
+    <script type="text/javascript" src="../../js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../../js/newwin_Countdown.js"></script>
+    <script type="text/javascript">
+
+        var closeflag = true;
+
+        //滑鼠和鍵盤操作事件，包含重置主頁面上的登出倒數
+        document.onmouseover = function (e) {
+            resetTimer();
+        }
+
+        document.oncontextmenu = oncmenu;
+        function oncmenu() {
+            resetTimer();//重置主頁面上的登出倒數
+            window.event.returnValue = false; //將滑鼠右鍵事件取消
+        }
+
+        document.onkeydown = keydown;
+        function keydown() {
+            resetTimer();//重置主頁面上的登出倒數
+            var key = window.event.keyCode;
+            if (key == 13) {
+                return false;
+            }
+        }
+
+        //每60秒重新設定父視窗的倒數，目前沒有用到
+        function BackParentTimer() {
+            parentTimer = window.setInterval("resetTimer();", 60000);
+        }
+
+        function HistoryUrl(url) {
+            opener.top.main.location.href = url;
+            window.close();
+
+        }
+
+        function showDownZone(IsDownload, lang) {
+            var thisForm = this.document.form1;
+            thisForm.CVPlayer.SetCulture(lang);
+            
+            if (document.getElementById("DownZone") != null) {
+                if (IsDownload == "False") {
+                    document.getElementById("DownZone").style.display = "none";
+                    document.getElementById("ZoneSnapshot1").style.display = "none";
+                    document.getElementById("ZoneSnapshot2").style.display = "none";
+                }
+            }
+        }
+    
+    
+    </script>
+<link href="../../App_Themes/default/StyleSheet.css" type="text/css" rel="stylesheet" /></head>
+<body onload="showDownZone('True','zh-TW');">
+    <object name="Downloadocx" id="Downloadocx" codebase="../../Download/DL.CAB" classid="clsid:EF87C28D-24AA-4830-8442-1BBAD949B808"
+        width="0" height="0" type="application/x-itst-activex">
+    </object>
+
+    <input name="lang" type="hidden" id="lang" value="zh-TW" />
+    <form name="form1" method="post" action="FullTime_Player.aspx?cQgZCw9VfXFTRFVIQk8CBkZDV0E1BAN6VAAKX4m1vdDQ3IzN35yNtZXd01FGjfer3MXhhMSj057lk%2fvLWCoEBUFeIFdESF4HBkArUl4ZGdDr%2fIHE2ZCCmpfL5oHY0Ia8sojq64mOnd3Z2oDC8J6bgEVLg9DBgOGX0OjHhPWfHAReTTtIWV5xYyE6NlpHUUAFBkNXUkIJAw%3d%3d" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=NwkpcB7VsvADUUeJtbmeXYZJL5mDhUzcDIS8x2NaNg6OohFHX-fF2jsVS6KDfX8OaY00O9s-4pDwdoGmAF57z3enLhg1&amp;t=636284921597151108" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=i-cYcxOwR1tRYoT5JibnPu0TsoAglqawBvSpXEuHVzHzxrRqN7HSwoq8KdOPxFYTv0ZB7hbtGUrIn3H8S3HRYGV67ICHnKmYLvlpmAgvzdjojN3d5FX3In8_pO1_fe0NeApOeXnr6_6y3xkLpVYAY75zl9yF8UvLVUswNK-cPW7yE_QT0&amp;t=635660777413002310" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=SSLwyVgmP-N02BXx5viQAaObJLrxT5bY1iob9fke48W8hlehPYS-z3vgFGGSvTXDFPbiWg-Ha83wHOl3HXVnARLRZ3ndZ9Z7Q-FnkuOptOEhqt-kbVo7AbxajSyjzcGJRJFR3Xu_4smWCQdI4haW-UqwgMWSMv59V0BRpuind81V8mXm0&amp;t=635660777413002310" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="AD1ABC08" />
+</div>
+    <input type="hidden" name="myVideo" value="" />
+    <input type="hidden" name="myCamName" value="" />
+    <input type="hidden" name="myCut" value="" />
+    <input type="hidden" name="myRelay" value="" />
+    <input name="isAllowed" type="hidden" id="isAllowed" value="True" />
+        <input name="strShowRatio" type="hidden" id="strShowRatio" value="顯示影像比例" />
+        <input name="strHideRatio" type="hidden" id="strHideRatio" value="隱藏影像比例" />
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', document.getElementById('form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['fUpdatePanel1','fUpdatePanel3','tUpdatePanel2'], ['Calendar1','btnSearch','BtnGetCut'], [], 90);
+//]]>
+</script>
+
+    <div>
+        <fieldset id="Fieldset1">
+            <legend class="FieldSetTitle" id="LEGEND1"><span id="windowLegend">
+                <span id="lbFieldset">歷史影片查詢結果</span>
+            </span></legend>
+            <table width="99%" align="center">
+                <tr>
+                    <td class="nTD_left" style="width: 200px; height: 25px;">
+                        <span id="labSearchFile">請點選日期後按查詢：</span>
+                    </td>
+                    <td class="nTD_left" style="height: 25px;">
+                        <span id="lbPlayText">播放區：</span>
+                        <span id="lbPlay">&#20809;&#24489;&#36335;&#19968;&#27573;60&#34399;&#39438;&#27155;&#31435;&#26609;(R102-F02-033-D02)-&#20809;&#24489;&#36335;&#19968;&#27573;&#33287;&#20809;&#24489;&#36335;&#19968;&#27573;68&#24055;&#21475;&#20840;&#26223;(108_2)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" class="nTD_right" style="width: 200px;">
+                        <div id="UpdatePanel1">
+	
+                                <table id="Calendar1" cellspacing="0" cellpadding="4" title="月曆" border="0" style="width:200px;height:180px;font-size:8pt;font-family:Verdana;color:Black;border-width:1px;border-style:solid;border-color:#999999;background-color:White;border-collapse:collapse;">
+		<tr><td colspan="7" style="background-color:#999999;border-color:Black;"><table cellspacing="0" border="0" style="color:Black;font-family:Verdana;font-size:8pt;font-weight:bold;width:100%;border-collapse:collapse;">
+			<tr><td valign="bottom" style="width:15%;"><a href="javascript:__doPostBack('Calendar1','V7244')" style="color:Black" title="移至上個月">&lt;</a></td><td align="center" style="width:70%;">2019年12月</td><td align="right" valign="bottom" style="width:15%;"><a href="javascript:__doPostBack('Calendar1','V7305')" style="color:Black" title="移至下個月">&gt;</a></td></tr>
+		</table></td></tr><tr><th align="center" abbr="星期日" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">日</th><th align="center" abbr="星期一" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">一</th><th align="center" abbr="星期二" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">二</th><th align="center" abbr="星期三" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">三</th><th align="center" abbr="星期四" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">四</th><th align="center" abbr="星期五" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">五</th><th align="center" abbr="星期六" scope="col" style="background-color:#CCCCCC;font-size:7pt;font-weight:bold;">六</th></tr><tr><td align="center" style="color:Red;background-color:#FFFFCC;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7267')" style="color:Red" title="11月24日">24</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7268')" style="color:Red" title="11月25日">25</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7269')" style="color:Red" title="11月26日">26</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7270')" style="color:Red" title="11月27日">27</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7271')" style="color:Red" title="11月28日">28</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7272')" style="color:Red" title="11月29日">29</a></td><td align="center" style="color:Red;background-color:#FFFFCC;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7273')" style="color:Red" title="11月30日">30</a></td></tr><tr><td align="center" style="color:Red;background-color:#FFFFCC;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7274')" style="color:Red" title="12月1日">1</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7275')" style="color:Red" title="12月2日">2</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7276')" style="color:Red" title="12月3日">3</a></td><td align="center" style="color:Red;font-weight:bold;width:14%;"><a href="javascript:__doPostBack('Calendar1','7277')" style="color:Red" title="12月4日">4</a></td><td class="SelDate" align="center" style="color:Gray;background-color:Silver;width:14%;">5</td><td align="center" style="color:Gray;width:14%;">6</td><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">7</td></tr><tr><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">8</td><td align="center" style="color:Gray;width:14%;">9</td><td align="center" style="color:Gray;width:14%;">10</td><td align="center" style="color:Gray;width:14%;">11</td><td align="center" style="color:Gray;width:14%;">12</td><td align="center" style="color:Gray;width:14%;">13</td><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">14</td></tr><tr><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">15</td><td align="center" style="color:Gray;width:14%;">16</td><td align="center" style="color:Gray;width:14%;">17</td><td align="center" style="color:Gray;width:14%;">18</td><td align="center" style="color:Gray;width:14%;">19</td><td align="center" style="color:Gray;width:14%;">20</td><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">21</td></tr><tr><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">22</td><td align="center" style="color:Gray;width:14%;">23</td><td align="center" style="color:Gray;width:14%;">24</td><td align="center" style="color:Gray;width:14%;">25</td><td align="center" style="color:Gray;width:14%;">26</td><td align="center" style="color:Gray;width:14%;">27</td><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">28</td></tr><tr><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">29</td><td align="center" style="color:Gray;width:14%;">30</td><td align="center" style="color:Gray;width:14%;">31</td><td align="center" style="color:Gray;width:14%;">1</td><td align="center" style="color:Gray;width:14%;">2</td><td align="center" style="color:Gray;width:14%;">3</td><td align="center" style="color:Gray;background-color:#FFFFCC;width:14%;">4</td></tr>
+	</table>
+                                <select name="DrpTimeS" id="DrpTimeS">
+		<option value="0000">00:00</option>
+		<option value="0030">00:30</option>
+		<option value="0100">01:00</option>
+		<option value="0130">01:30</option>
+		<option value="0200">02:00</option>
+		<option value="0230">02:30</option>
+		<option value="0300">03:00</option>
+		<option value="0330">03:30</option>
+		<option value="0400">04:00</option>
+		<option value="0430">04:30</option>
+		<option value="0500">05:00</option>
+		<option value="0530">05:30</option>
+		<option value="0600">06:00</option>
+		<option value="0630">06:30</option>
+		<option value="0700">07:00</option>
+		<option value="0730">07:30</option>
+		<option value="0800">08:00</option>
+		<option value="0830">08:30</option>
+		<option value="0900">09:00</option>
+		<option value="0930">09:30</option>
+		<option value="1000">10:00</option>
+		<option value="1030">10:30</option>
+		<option value="1100">11:00</option>
+		<option value="1130">11:30</option>
+		<option value="1200">12:00</option>
+		<option value="1230">12:30</option>
+		<option value="1300">13:00</option>
+		<option value="1330">13:30</option>
+		<option value="1400">14:00</option>
+		<option value="1430">14:30</option>
+		<option value="1500">15:00</option>
+		<option value="1530">15:30</option>
+		<option value="1600">16:00</option>
+		<option value="1630">16:30</option>
+		<option value="1700">17:00</option>
+		<option value="1730">17:30</option>
+		<option value="1800">18:00</option>
+		<option value="1830">18:30</option>
+		<option value="1900">19:00</option>
+		<option value="1930">19:30</option>
+		<option value="2000">20:00</option>
+		<option value="2030">20:30</option>
+		<option value="2100">21:00</option>
+		<option value="2130">21:30</option>
+		<option value="2200">22:00</option>
+		<option value="2230">22:30</option>
+		<option value="2300">23:00</option>
+		<option value="2330">23:30</option>
+
+	</select>
+                                ~
+                                <select name="DrpTimeE" id="DrpTimeE">
+		<option value="0000">00:00</option>
+		<option value="0030">00:30</option>
+		<option value="0100">01:00</option>
+		<option value="0130">01:30</option>
+		<option value="0200">02:00</option>
+		<option value="0230">02:30</option>
+		<option value="0300">03:00</option>
+		<option value="0330">03:30</option>
+		<option value="0400">04:00</option>
+		<option value="0430">04:30</option>
+		<option value="0500">05:00</option>
+		<option value="0530">05:30</option>
+		<option value="0600">06:00</option>
+		<option value="0630">06:30</option>
+		<option value="0700">07:00</option>
+		<option value="0730">07:30</option>
+		<option value="0800">08:00</option>
+		<option value="0830">08:30</option>
+		<option value="0900">09:00</option>
+		<option value="0930">09:30</option>
+		<option value="1000">10:00</option>
+		<option value="1030">10:30</option>
+		<option value="1100">11:00</option>
+		<option value="1130">11:30</option>
+		<option value="1200">12:00</option>
+		<option value="1230">12:30</option>
+		<option value="1300">13:00</option>
+		<option value="1330">13:30</option>
+		<option value="1400">14:00</option>
+		<option value="1430">14:30</option>
+		<option value="1500">15:00</option>
+		<option value="1530">15:30</option>
+		<option value="1600">16:00</option>
+		<option value="1630">16:30</option>
+		<option value="1700">17:00</option>
+		<option value="1730">17:30</option>
+		<option value="1800">18:00</option>
+		<option value="1830">18:30</option>
+		<option value="1900">19:00</option>
+		<option value="1930">19:30</option>
+		<option value="2000">20:00</option>
+		<option value="2030">20:30</option>
+		<option value="2100">21:00</option>
+		<option value="2130">21:30</option>
+		<option value="2200">22:00</option>
+		<option value="2230">22:30</option>
+		<option value="2300">23:00</option>
+		<option selected="selected" value="2330">23:30</option>
+		<option value="2359">23:59</option>
+
+	</select>
+                                <input type="submit" name="btnSearch" value="查詢" id="btnSearch" class="ReSizeButton" />
+                                <span id="lbSelDateTitle"></span>
+                                <span id="lbSelDate">2019/12/05</span><br />
+                                <span id="lbEventMsg" style="color:Red;"></span><br />
+                                <div id="UpdatePanel3">
+		
+                                        <input type="submit" name="BtnLoad" value="載入選取檔案" onclick="turnon();" id="BtnLoad" class="NornButton" />
+                                    
+	</div>
+                                <hr size="1" />
+                                <div align="left" style="height: 300px; width: 200px; overflow: auto;">
+                                    
+                                </div>
+                                <hr size="1" />
+                                        <input type="submit" name="BtnGetCut" value="觀看即時斷檔影片" id="BtnGetCut" class="BigButton" style="font-size:Small;height:20px;" />
+                            
+</div>
+                    </td>
+                    <td class="nTD_right" style="width: 100%" valign="top" align="center">
+                        <table border="0" align="center" width="100%" cellpadding="0" cellspacing="2">
+                            <tr>
+                                <td>
+                                    <input type="button" value="<" title="上一頁" id="prePage"class="SButton" name="prePage" onclick="AddPage(-1);" style=" font-size:larger; display:none;"/>
+                                    <select name="CutPage" onchange="GoPage(this.value);">
+                                    </select>
+                                    <input type="button" value=">" title="下一頁" id="nextPage" class="SButton" name="nextPage" onclick="AddPage(1);" style=" font-size:larger; display:none;"/> 
+                                    <input type="button" value="1" class="SButton" name="panelnum1" onclick="SetSize(1);" />
+                                    <input type="button" value="4" class="SButton" name="panelnum4" onclick="SetSize(4);" />
+                                    <input type="button" value="9" class="SButton" name="panelnum9" onclick="SetSize(9);" />
+                                    | <a href="javascript:doStartPlay();" title="播放">
+                                        <img src="../../images/player/play.png" border="0" width="20"></a> <a href="javascript:PauseToPlay();"
+                                            title="暫停">
+                                            <img src="../../images/player/pause.png" border="0" width="20"></a> <a href="javascript:StopToPlay();"
+                                                title="停止">
+                                                <img src="../../images/player/stop.png" border="0" width="20"></a>
+                                    <!--a href="javascript:StartToRecord();" title="錄影"><img src="../../images/player/rec.png" border="0" width="20"></a>
+                            <a href="javascript:StopToRecord();" title="停止錄影"><img src="../../images/player/stoprec.png" border="0" width="20"></a-->
+                                    | <a href="javascript:AllStartPlay();" title="全部播放">
+                                        <img src="../../images/player/play.png" border="0" width="20"></a> <a href="javascript:AllPauseToPlay();"
+                                            title="全部暫停">
+                                            <img src="../../images/player/pause.png" border="0" width="20"></a> <a href="javascript:AllStopToPlay();"
+                                                title="全部停止">
+                                                <img src="../../images/player/stop.png" border="0" width="20"></a> |
+                                    <div id="ZoneSnapshot1" style="display: inline;">
+                                        <select name="takePic1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                        <a href="javascript:CallSnapshot1();" title="快照">
+                                            <img src="../../images/player/snapshot.png" border="0" width="20"></a> |
+                                    </div>
+                                    <input type="submit" name="btnSet" value="設定" onclick="SetGeneralSetting();return false;" id="btnSet" class="ReSizeButton" />
+                                     <input type="submit" name="btnFolder" value="目錄" onclick="GotoSnapshotFolder();return false;" id="btnFolder" class="ReSizeButton" />
+                                    <button id="btnRatioSwitch" class="SPButton" onclick="onRatioChange(true);return false;">4:3</button>
+                                            <button id="btnShowRatio" class="SPButton" onclick="onChkShowRatio();return false;">顯示影像比例</button>
+                                    <input type="submit" name="CloseMe" value="關閉" onclick="closeflag=false;thisForm.CVPlayer.CloseAll();window.close();" id="CloseMe" class="ReSizeButton" />
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <object id="CVPlayer" name="CVPlayer" align="center" width="640" height="480" classid="clsid:1D815D08-F659-4c89-B054-9CAE14928340">
+                                    </object>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:doStartPlay();" title="播放">
+                                        <img src="../../images/player/play.png" border="0" width="20"></a> <a href="javascript:PauseToPlay();"
+                                            title="暫停">
+                                            <img src="../../images/player/pause.png" border="0" width="20"></a> <a href="javascript:StopToPlay();"
+                                                title="停止">
+                                                <img src="../../images/player/stop.png" border="0" width="20"></a>
+                                    <!--a href="javascript:StartToRecord();" title="錄影"><img src="../../images/player/rec.png" border="0" width="20"></a>
+                            <a href="javascript:StopToRecord();" title="停止錄影"><img src="../../images/player/stoprec.png" border="0" width="20"></a-->
+                                    | <a href="javascript:AllStartPlay();" title="全部播放">
+                                        <img src="../../images/player/play.png" border="0" width="20"></a> <a href="javascript:AllPauseToPlay();"
+                                            title="全部暫停">
+                                            <img src="../../images/player/pause.png" border="0" width="20"></a> <a href="javascript:AllStopToPlay();"
+                                                title="全部停止">
+                                                <img src="../../images/player/stop.png" border="0" width="20"></a>
+                                    <div id="ZoneSnapshot2" style="display: inline;">
+                                        |
+                                        <select name="takePic2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                        <a href="javascript:CallSnapshot2();" title="快照">
+                                            <img src="../../images/player/snapshot.png" border="0" width="20"></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    向前：<!--向前：-->
+                                    <input type="button" name="cmrate" class="SButton" value="1" onclick="ForwardFramebyFrame()" />
+                                    <input type="button" name="cmrate" class="SButton" value="1/4" onclick="SetFFW(0.25)" />
+                                    <input type="button" name="cmrate" class="SButton" value="1/2" onclick="SetFFW(0.5)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x1" onclick="SetFFW(1)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x2" onclick="SetFFW(2)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x4" onclick="SetFFW(4)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x8" onclick="SetFFW(8)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x16" onclick="SetFFW(16)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    向後：<!--向後：-->
+                                    <input type="button" name="cmrate" class="SButton" value="1" onclick="RewindFramebyFrame()" />
+                                    <input type="button" name="cmrate" class="SButton" value="1/4" onclick="SetRewind(0.03)" />
+                                    <input type="button" name="cmrate" class="SButton" value="1/2" onclick="SetRewind(0.1)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x1" onclick="SetRewind(0.15)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x2" onclick="SetRewind(0.25)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x4" onclick="SetRewind(0.45)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x8" onclick="SetRewind(0.85)" />
+                                    <input type="button" name="cmrate" class="SButton" value="x16" onclick="SetRewind(2)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="DownZone">
+                                        請輸入剪輯起始秒數：<!--請輸入剪輯起始秒數：--><input type='text' class="TextBox" name='start_s' id='start_s' value='0' size='3' />秒<!--秒：-->
+                                        , 長度：<!--, 長度：--><input type='text' class="TextBox" name='length_s' id='length_s' value='60'size='3' />秒<!--秒：--><br />
+                                        或 <!--或 -->時間區間 (分&秒 / 0201)：<!--剪輯區間：-->
+                                        <input type='text' class="TextBox" name='start_m' id='start_m' value='' size='4' />
+                                        ~
+                                        <input type='text' class="TextBox" name='length_m' id='length_m' value='' size='4' /><br />
+                                        
+                                        請選擇輸出格式：<!--請選擇輸出格式：-->
+                                        <select name='format' id='format' class='TextBox'>
+                                            <option value='avi'>avi</option>
+                                            <option value='mp4'>mp4</option>
+                                        </select>
+                                        <span id="UpdatePanel2">
+                                                <input type="submit" name="BtnCut" value="開始剪輯" onclick="checkCut();" id="BtnCut" class="ReSizeButton" />
+                                                <input type="submit" name="BtnDw" value="單檔下載" onclick="DownloadOne();" id="BtnDw" class="NornButton" />
+                                                <input type="hidden" name="hidFileName" id="hidFileName" />
+                                            </span>
+                                        <br />
+                                        <div id="filmdownload">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.initialize();
+//]]>
+</script>
+</form>
+    <script language="javascript" type="text/javascript">
+   <!--
+        var thisForm = document.form1;
+        var isShowRatio = false;
+        $("#btnShowRatio").html(document.getElementById("strShowRatio").value);
+        /*顯示或不顯示影像原始比例*/
+        function onChkShowRatio() {
+            if (thisForm.CVPlayer) {
+                isShowRatio = !isShowRatio;
+                thisForm.CVPlayer.SetShowRatio(isShowRatio);
+                if (isShowRatio)
+                    $("#btnShowRatio").html(document.getElementById("strHideRatio").value);
+                else
+                    $("#btnShowRatio").html(document.getElementById("strShowRatio").value);
+            }
+        }
+
+        var curRatio = "16:9";
+        /*改變player元件為 16:9 或者 4:3，由switchRatio觸發*/
+        function onRatioChange() {
+            if (thisForm.CVPlayer) {
+                $("#btnRatioSwitch").html(curRatio);
+                if (curRatio == "16:9")//true表示4:3
+                    curRatio = "4:3";
+                else
+                    curRatio = "16:9";
+                thisForm.CVPlayer.SetPlayerRatio(curRatio);
+            }
+        }
+        function setHidFileName(strurl) {
+            var objhidfilename;
+            if (document.getElementById("hidFileName") != null) {
+                objhidfilename = document.getElementById("hidFileName");
+
+                objhidfilename.value = strurl;
+            }
+
+        }
+
+
+        function DownloadOne() {
+
+            var aryUri = thisForm.myVideo.value.split(",");
+            var CamIndex = GetPanelIndex();
+            if (aryUri != "" && CamIndex != "0") {
+                if ((CamIndex - 1) >= aryUri.length) {
+                    alert("超出選取範圍"); //超出選取範圍
+                } else {
+                    var DownUri = aryUri[CamIndex - 1];
+                    setHidFileName(DownUri);
+                    var dlocx = document.getElementById("Downloadocx")
+                    if (dlocx != null) {
+                        dlocx.SetCulture('zh-TW');
+                        dlocx.ShowProgressDialog(DownUri + ";");
+                    }
+                }
+            } else {
+                alert("請載入選取檔案");  //請載入選取檔案
+            }
+
+        }
+
+
+        //剪輯影片add by jessie
+        function checkCut() {
+            var format, relay_ip, nvr_ip, path_name, fname, start_s, length_s, start_m, length_m, url, expire, sessionid, username;
+            var aryUri = thisForm.myVideo.value.split(",");
+            var arycut = thisForm.myCut.value.split(",");
+            var aryRelay = thisForm.myRelay.value.split(",");
+            var CamIndex = GetPanelIndex();
+            var camparam = arycut[CamIndex - 1];
+            relay_ip = aryRelay[CamIndex - 1];
+
+            if (CamIndex == 0) {
+                alert('請先選擇影片'); //請先選擇影片
+            }
+            else {
+                var dlocx = document.getElementById("Downloadocx")
+
+                setHidFileName(aryUri[CamIndex - 1]);
+                format = document.getElementById("format").value;
+                start_s = document.getElementById("start_s").value;
+                length_s = document.getElementById("length_s").value;
+                start_m = document.getElementById("start_m").value;
+                length_m = document.getElementById("length_m").value;
+                if (start_m != "" && length_m != "") {
+                    if (isNaN(start_m) || isNaN(length_m) || IsNegative(start_m) == false || IsNegative(length_m) == false)
+                        alert('秒數不可為負數並請輸入格式正確之秒數!');  //秒數不可為負數並請輸入格式正確之秒數!
+                    else if (start_m.length != "4" || length_m.length != "4")
+                        alert('請輸入正確四位數分秒(0201)');  //請輸入正確四位數分秒(0201)
+                    else {
+                        start_s = Math.abs(start_m.substring(0, 2) * 60) + Math.abs(start_m.substring(2));
+                        length_s = Math.abs((length_m.substring(0, 2) - start_m.substring(0, 2)) * 60) + Math.abs(length_m.substring(2) - start_m.substring(2));
+                        //url = "http://"+relay_ip+":8080/cgi-bin/movie."+format+"?file="+expire+"-"+sessionid+"-"+username+"/"+ nvr_ip + path_name + fname+"&ss="+start_s+"&len="+length_s;
+                        url = "http://" + relay_ip + ":8080/cgi-bin/download/movie." + format + "?file=" + camparam + "&ss=" + start_s + "&len=" + length_s;
+                        //document.getElementById("filmdownload").innerHTML="<br><font color='darkred'>【剪輯完成 (檔案格式："+format+") --<a href='"+encodeURI(url)+"' contextmenu='true' target=_blank>請按右鍵另存新檔</A>--"+format+"】</font>";
+                        if (dlocx != null) {
+                            dlocx.SetCulture('zh-TW');
+                            dlocx.ShowProgressDialog(url + ";");
+                        }
+                        
+                        //window.location.href=url;
+                        //alert("剪輯中需較長時間請耐心等待..");
+                    }
+                }
+                else if (start_s != "" && length_s != "") {
+                    if (isNaN(start_s) || isNaN(length_s) || IsNegative(start_s) == false || IsNegative(length_s) == false)
+                        alert('秒數不可為負數並請輸入格式正確之秒數!');  //秒數不可為負數並請輸入格式正確之秒數!
+                    else {
+                        //url = "http://"+relay_ip+":8080/cgi-bin/movie."+format+"?file="+expire+"-"+sessionid+"-"+username+"/"+ nvr_ip + path_name + fname+"&ss="+start_s+"&len="+length_s;
+                        url = "http://" + relay_ip + ":8080/cgi-bin/download/movie." + format + "?file=" + camparam + "&ss=" + start_s + "&len=" + length_s;
+                        //document.getElementById("filmdownload").innerHTML="<br><font color='darkred'>【剪輯完成 (檔案格式："+format+") --<a href='"+encodeURI(url)+"' contextmenu='true' target=_blank>請按右鍵另存新檔</A>--"+format+"】</font>";
+                        if (dlocx != null) {
+                            dlocx.SetCulture('zh-TW');
+                            dlocx.ShowProgressDialog(url + ";");
+                        }
+                        
+                        //window.location.href=url;
+                        //alert("剪輯中需較長時間請耐心等待..");
+                    }
+                }
+                else {
+                    alert('請先選擇要剪輯的秒數'); //請先選擇要剪輯的秒數
+                }
+            }
+        }
+
+        //check是否為負數
+        function IsNegative(string) {
+            var number;
+            number = new Number(string);
+            if (isNaN(number)) {
+                return false;
+            }
+            else if (number >= 0) {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        function SetSize(panelnum) {
+            switch (panelnum) {
+                case 1:
+                    thisForm.CVPlayer.width = 640;
+                    thisForm.CVPlayer.height = 480;
+                    break;
+                case 4:
+                    thisForm.CVPlayer.width = 320;
+                    thisForm.CVPlayer.height = 240;
+                    break;
+                case 9:
+                    thisForm.CVPlayer.width = 240;
+                    thisForm.CVPlayer.height = 180;
+                    break;
+                case 16:
+                    thisForm.CVPlayer.width = 180;
+                    thisForm.CVPlayer.height = 120;
+                    break;
+            }
+
+            SetPlayerNumber(panelnum, thisForm.CVPlayer.width, thisForm.CVPlayer.height);
+
+            //權限控制
+            if (thisForm.isAllowed.value == "False")
+                thisForm.CVPlayer.ShowContextMenubyNum("1,2,3,10");
+            else
+                thisForm.CVPlayer.ShowContextMenubyNum("1,2,3,6,10");
+
+            CreatePage();
+            setTimeout(function () { thisForm.CVPlayer.SetPlayerRatio(curRatio); }, 200);
+            
+            thisForm.CVPlayer.SetShowRatio(isShowRatio);
+        }
+
+        //產生分頁
+        function CreatePage() {
+            var objListPage = thisForm.CutPage
+            objListPage.options.length = 0
+            var intTot = thisForm.CVPlayer.TotalPageNumber;
+
+            if (intTot > 0) {
+                for (i = 1; i <= intTot; i++) {
+                    var newitem = document.createElement("OPTION");
+                    newitem.text = i;
+                    newitem.value = i;
+                    objListPage.options.add(newitem);
+                }
+            }
+            if (thisForm.CVPlayer.TotalPageNumber == 1) 
+            {
+	    		    $('#prePage').hide();
+	    		    $('#nextPage').hide();
+	    		    $('#CutPage').hide();
+	    	}
+	    	else 
+            {
+                    $('#prePage').hide();
+                    $('#nextPage').show();
+                    $('#CutPage').show();
+            }
+        }
+
+          function GoPage(page) 
+          {
+		      var objPage = thisForm.CutPage;
+		      if (page >= 1 && page <= thisForm.CVPlayer.TotalPageNumber) {
+		          gotoPage(page);
+		          setTimeout(function () { thisForm.CVPlayer.SetPlayerRatio(curRatio); }, 200);
+		          thisForm.CVPlayer.SetShowRatio(isShowRatio);
+		      }
+
+		      if (page <= 1) {
+		          $('#prePage').hide();
+		      }
+		      else {
+		          $('#prePage').show();
+		      }
+
+		      if (page >= thisForm.CVPlayer.TotalPageNumber) {
+		          $('#nextPage').hide();
+		      }
+		      else {
+		          $('#nextPage').show();
+		      }
+          }
+		  function AddPage(page) 
+          {
+              var objPage = thisForm.CutPage;
+
+              if (parseInt(objPage.value) + parseInt(page) >= 1 && parseInt(objPage.value) + parseInt(page) <= thisForm.CVPlayer.TotalPageNumber) 
+              {
+                  objPage.value = parseInt(objPage.value) + parseInt(page);
+                  gotoPage(objPage.value);
+                  setTimeout(function () { thisForm.CVPlayer.SetPlayerRatio(curRatio); }, 200);
+                  thisForm.CVPlayer.SetShowRatio(isShowRatio);
+              }
+              
+              if (objPage.value <= 1) 
+              {
+                  $('#prePage').hide();
+              }
+              else 
+              {
+                  $('#prePage').show();
+              }
+
+              if (objPage.value >= thisForm.CVPlayer.TotalPageNumber) 
+              {
+                  $('#nextPage').hide();
+              }
+              else 
+              {
+                  $('#nextPage').show();
+              }
+		  }	  
+        function MergeVideoUrl() {
+            thisForm.myVideo.value = "";
+            thisForm.myCamName.value = "";
+            thisForm.myCut.value = "";
+            thisForm.myRelay.value = "";
+
+            var intCount = 0;
+            for (var i = 0; i < thisForm.elements.length; i++) {
+                if (thisForm.elements[i].type == "checkbox") {
+                    var e = thisForm.elements[i];
+
+                    if (e.checked) {
+                        intCount++;
+                        if (intCount > 9) {
+                            alert("最多支援9隻攝影機");  //最多支援9隻攝影機
+                            e.checked = false;
+                            break;
+                        }
+                        var arytmp = e.value.split(",");
+
+                        if (thisForm.myVideo.value == "") {
+                            thisForm.myVideo.value = arytmp[1];
+                            thisForm.myCamName.value = arytmp[0];
+                            thisForm.myCut.value = arytmp[2];
+                            thisForm.myRelay.value = arytmp[3];
+                        } else {
+                            thisForm.myVideo.value += "," + arytmp[1];
+                            thisForm.myCamName.value += "," + arytmp[0];
+                            thisForm.myCut.value += "," + arytmp[2];
+                            thisForm.myRelay.value += "," + arytmp[3];
+                        }
+                    }
+                }
+            }
+
+        }
+
+        function turnon() {
+        
+            try {
+                setHidFileName(thisForm.myVideo.value);
+                var tmpary = thisForm.myVideo.value.split(",");
+                var intNum = 1;
+                if(typeof(SetCulture)=="function")
+                {
+                  SetCulture("zh-TW");
+                }
+                SetPlaylist(thisForm.myVideo.value, thisForm.myCamName.value);
+                try{  thisForm.CVPlayer.SetAccount('trully,20191205,000101');}catch (e){}
+
+
+                if (tmpary.length > 1 && tmpary.length <= 4) {
+                    intNum = 4;
+                } else if (tmpary.length > 4) {
+                    intNum = 9;
+                } else {
+                    intNum = 1;
+                }
+
+                SetSize(intNum);
+            }    
+            catch (e)
+            {
+            
+            }
+
+        }
+
+        function turnoff() {
+            thisForm.CVPlayer.CloseAll();
+        }
+
+        function SetZoom() {
+
+        }
+
+
+        function SetZoomOut() {
+
+        }
+
+        //攝影機斷線回傳訊息
+        function showstreamstop(msg) {
+
+        }
+
+        //快照處理==================
+        var picCount = 0;
+        var intPic = 1;
+        function CallSnapshot1() {
+            picCount = 0;
+            intPic = thisForm.takePic1.value * 1;
+            startSnapshot();
+        }
+        function CallSnapshot2() {
+            picCount = 0;
+            intPic = thisForm.takePic2.value * 1;
+            startSnapshot();
+        }
+
+
+        function startSnapshot() {
+            picCount++;
+
+            if (picCount <= intPic) {
+                TakeSnapshot();
+                setTimeout('startSnapshot()', 500);
+            }
+        }
+        //============================
+        document.body.onunload = function () { if (closeflag) { thisForm.CVPlayer.CloseAll(); } }              
+   
+    </script>
+</body>
+</html>
