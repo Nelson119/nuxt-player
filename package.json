@@ -24,7 +24,7 @@
     "vue-html2canvas": "0.0.4"
   },
   "devDependencies": {
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "push-dir": "^0.4.1",
     "sass-loader": "^8.0.0",
     "vue-video-player": "^5.0.2"
